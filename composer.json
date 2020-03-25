@@ -1,0 +1,29 @@
+{
+    "name": "evgvfv/php-project-lvl2",
+    "bin": [
+        
+    ],
+    "type": "project",
+    "authors": [
+        {
+            "name": "Evgeniy Vafiev",
+            "email": "evgvfv@gmail.com"
+        }
+    ],
+    "description": "",
+    "keywords": [""],
+    "license": "MIT",
+    "scripts": {
+        "phpcs":"phpcs"
+    },
+    "autoload":{
+        "files": [
+            
+        ]
+    },
+    "require": {
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    }
+}
