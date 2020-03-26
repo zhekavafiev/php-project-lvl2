@@ -17,7 +17,12 @@
         "phpcs":"phpcs"
     },
     "autoload":{
-        "PSR4": {"Docopt\\": "vendor/docopt/docopt/src"}
+        "files": [
+            "src/genDiff.php"
+        ],
+        "PSR4": {
+            "Docopt\\": "vendor/docopt/docopt/src"
+        }
     },
     "require": {
         "docopt/docopt": "^1.0"

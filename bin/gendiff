@@ -2,18 +2,29 @@
 
 <?php
 
-require __DIR__.'/../vendor/docopt/docopt/src/docopt.php';
+//require __DIR__.'/../vendor/docopt/docopt/src/docopt.php';
+require_once __DIR__ . '/../src/autoload.php';
+
+use function Differ\GenDiff\genDiff;
 
 $doc = <<<'DOCOPT'
 Usage:
     gendiff (-h| --help)
     gendiff (-v| --version)
+    gendiff [--format <fmt>] [<firstFile>] [<secondFile>]
 Options:
-    -h             show this help message and exit
-    -v             show version and exit
+    -h             show this screen
+    -v --version   show version
+    --format <fmt> Report format [default: pretty]
 DOCOPT;
 
-$result = Docopt::handle($doc, array('version'=>'1.0.0rc2'));
-//print_r($result);
-foreach ($result as $k=>$v)
+$dataForDiff = Docopt::handle($doc, array('version' => '1.0.0rc2'));
+
+/*foreach ($dataForDiff as $k=>$v) {
     echo $k.': '.json_encode($v).PHP_EOL;
+}*/
+if ($dataForDiff['<firstFile>'] != null && $dataForDiff['<secondFile>'] != null) {
+    $diff = genDiff([$dataForDiff['<firstFile>'], $dataForDiff['<secondFile>']]);
+    print_r($diff . PHP_EOL);
+}
+
