@@ -1,7 +1,7 @@
 language: php
 
 before install:
-make install
+      - make install
 
 scripts:
-make lint
+      - make lint
