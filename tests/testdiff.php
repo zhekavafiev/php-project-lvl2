@@ -10,18 +10,18 @@ class DiffTest extends TestCase
 {
     public function testDiff()
     {
-        $expected = "{\n    -timeout: 20,\n    +timeout: 50,\n    -verbose: 1,\n    host: hexlet.io,\n    +proxy: 123.234.53.22\n}"
+        $expected = "{\n\t-timeout: 20,\n\t+timeout: 50,\n\t-verbose: 1,\n\thost: hexlet.io,\n\t+proxy: 123.234.53.22\n}"
          . PHP_EOL;
-        $pathToFiles1 = [
+        /*$pathToFiles1 = [
             "/home/evg/project1/php-project-lvl2/tests/fixtures/before.json",
             "/home/evg/project1/php-project-lvl2/tests/fixtures/after.json"
-        ];
+        ];*/
         $pathToFiles2 = [
             "tests/fixtures/before.json",
             "tests/fixtures/after.json"
         ];
 
-        $this->assertEquals($expected, genDiff($pathToFiles1));
+        //$this->assertEquals($expected, genDiff($pathToFiles1));
         $this->assertEquals($expected, genDiff($pathToFiles2));
     }
 }
