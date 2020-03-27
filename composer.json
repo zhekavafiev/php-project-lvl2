@@ -19,7 +19,8 @@
     },
     "autoload":{
         "files": [
-            "src/genDiff.php"
+            "src/genDiff.php",
+            "src/differ.php"
         ],
         "PSR4": {
             "Differ\\Tests": "tests"

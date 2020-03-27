@@ -10,7 +10,8 @@ class DiffTest extends TestCase
 {
     public function testDiff()
     {
-        $expected = "{\n    -timeout: 20,\n    +timeout: 50,\n    -verbose: 1,\n    host: hexlet.io,\n    +proxy: 123.234.53.22\n}" . PHP_EOL;
+        $expected = "{\n    -timeout: 20,\n    +timeout: 50,\n    -verbose: 1,\n    host: hexlet.io,\n    +proxy: 123.234.53.22\n}"
+         . PHP_EOL;
         $pathToFiles1 = [
             "/home/evg/project1/php-project-lvl2/tests/fixtures/before.json",
             "/home/evg/project1/php-project-lvl2/tests/fixtures/after.json"
