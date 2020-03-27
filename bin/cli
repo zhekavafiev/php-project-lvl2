@@ -4,6 +4,7 @@
 
 require_once __DIR__ . '/../src/autoload.php';
 
+use function Differ\GenDiff\gendiff;
 
 $doc = <<<'DOCOPT'
 Usage:

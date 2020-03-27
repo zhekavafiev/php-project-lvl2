@@ -6,22 +6,23 @@ function genDiff($paths)
 {
     $secondFile = json_decode(file_get_contents($paths[0]), true);
     $firstFile = json_decode(file_get_contents($paths[1]), true);
+    print_r($secondFile);
     $difrents = [];
     foreach ($firstFile as $key => $value) {
         if (array_key_exists($key, $secondFile)) {
             if ($firstFile[$key] == $secondFile[$key]) {
-                $difrents[$key] = "    $key: $value";
+                $difrents[$key] = "\t$key: $value";
             } else {
-                $difrents["-$key"] = "    -$key: $value";
-                $difrents[$key] = "    +$key: $secondFile[$key]";
+                $difrents["-$key"] = "\t-$key: $value";
+                $difrents[$key] = "\t+$key: $secondFile[$key]";
             }
         } else {
-            $difrents[] = "    -$key: $value";
+            $difrents[] = "\t-$key: $value";
         }
     }
     foreach ($secondFile as $key => $value) {
         if (!array_key_exists($key, $difrents)) {
-            $difrents[] = "    +$key: $value";
+            $difrents[] = "\t+$key: $value";
         }
     }
     $stringDiffrents = implode(",\n", $difrents);
