@@ -22,11 +22,11 @@ function genDiff($paths)
     foreach ($secondFile as $key => $value) {
         if (!array_key_exists($key, $difrents)) {
             $difrents[] = "    +$key: $value";
-        } 
+        }
     }
     $stringDiffrents = implode(",\n", $difrents);
     return "{\n$stringDiffrents\n}" . PHP_EOL;
 }
 
-/*$a = genDiff(["src/after.json", "src/before.json"]);
+/*$a = genDiff(["tests/fixtures/before.json", "tests/fixtures/after.json"]);
 print_r($a);*/
