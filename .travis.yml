@@ -1,6 +1,6 @@
 env:
       global:
-            - CC_TEST_REPORTER_ID = a990161b48a553eedb2d5b0d551d905abdc0ca9f10c83c6e350f8f311648365d
+            CC_TEST_REPORTER_ID = a990161b48a553eedb2d5b0d551d905abdc0ca9f10c83c6e350f8f311648365d
 
 language: php
 
@@ -12,7 +12,7 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
-scripts:
+script:
       - make lint
       - make test
 
