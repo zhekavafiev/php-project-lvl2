@@ -19,7 +19,7 @@
     },
     "autoload":{
         "files": [
-            "src/genDiff.php",
+            "src/parse.php",
             "src/differ.php"
         ],
         "PSR4": {
@@ -27,7 +27,8 @@
         }
     },
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "symfony/yaml": "^5.0"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*",

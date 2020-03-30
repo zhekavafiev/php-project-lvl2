@@ -4,7 +4,9 @@
 
 require_once __DIR__ . '/../src/autoload.php';
 
-use function Differ\GenDiff\gendiff;
+use function Differ\Parse\parse;
+use function Differ\Differ\processingDataFromFiles;
+use function Differ\Parse\printResultFindDiff;
 
 $doc = <<<'DOCOPT'
 Usage:
@@ -23,6 +25,11 @@ $dataForDiff = Docopt::handle($doc, array('version' => '1.0.0rc2'));
     echo $k.': '.json_encode($v).PHP_EOL;
 }*/
 if ($dataForDiff['<firstFile>'] != null && $dataForDiff['<secondFile>'] != null) {
-    $diff = genDiff([$dataForDiff['<firstFile>'], $dataForDiff['<secondFile>']]);
-    print_r($diff . PHP_EOL);
+    $dataForFindDiff = parse([
+        'pathsbefore' => $dataForDiff['<firstFile>'],
+        'pathsafter' => $dataForDiff['<secondFile>']
+    ]);
+    //print_r($dataForFindDiff);
+    $diff = processingDataFromFiles($dataForFindDiff);
+    print_r(printResultFindDiff($diff));
 }

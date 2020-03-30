@@ -4,24 +4,31 @@ namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use function Differ\GenDiff\genDiff;
+use function Differ\Parse\parse;
+use function Differ\Parse\printResultFindDiff;
+use function Differ\Differ\processingDataFromFiles;
+
 
 class DiffTest extends TestCase
 {
     public function testDiff()
     {
-        $expected = "{\n\t-timeout: 20,\n\t+timeout: 50,\n\t-verbose: 1,\n\thost: hexlet.io,\n\t+proxy: 123.234.53.22\n}"
+        $expected1 = "{\n\thost:hexlet.io,\n\t-timeout:50,\n\t+timeout:20,\n\t-proxy:123.234.53.22,\n\t+verbose:true\n}"
          . PHP_EOL;
-        /*$pathToFiles1 = [
-            "/home/evg/project1/php-project-lvl2/tests/fixtures/before.json",
-            "/home/evg/project1/php-project-lvl2/tests/fixtures/after.json"
-        ];*/
+         $expected2 = "{\n\thost:hexlet.io,\n\t-timeout:50,\n\t+timeout:200,\n\t-proxy:123.234.53.22,\n\t+verbose:true\n}"
+         . PHP_EOL;
+
+        $pathToFiles1 = [
+            'pathsbefore' => "tests/fixtures/beforeflat.json",
+            'pathsafter' => "tests/fixtures/afterflat.json"
+        ];
         $pathToFiles2 = [
-            "tests/fixtures/before.json",
-            "tests/fixtures/after.json"
+            'pathsbefore' => "tests/fixtures/beforeflat.yml",
+            'pathsafter' => "tests/fixtures/afterflat.yml"
         ];
 
-        //$this->assertEquals($expected, genDiff($pathToFiles1));
-        $this->assertEquals($expected, genDiff($pathToFiles2));
+        $this->assertEquals($expected1, printResultFindDiff(processingDataFromFiles(parse($pathToFiles1))));
+        $this->assertEquals($expected2, printResultFindDiff(processingDataFromFiles(parse($pathToFiles2))));
+
     }
 }
