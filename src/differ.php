@@ -2,28 +2,23 @@
 
 namespace Differ\Differ;
 
-function processingDataFromFiles($data)
+use function Differ\Parse\getDataFromFiles;
+use function Differ\ProcessingTree\buildingAsd;
+use function Differ\Formatters\ToPlain\renderToPlain;
+use function Differ\Formatters\ToJson\renderToJson;
+use function Differ\Formatters\ToStringWithBrace\renderIToStringWithBrace;
+
+function genDiff($path1, $path2, $format = '')
 {
-    ['type' => $type, 'pathsbefore' => $filesDataBefore, 'pathsafter' => $filesDataAfter] = $data;
-    foreach ($filesDataBefore as $key => $value) {
-        if (array_key_exists($key, $filesDataAfter)) {
-            if ($filesDataBefore[$key] == $filesDataAfter[$key]) {
-                $difrents[$key] = $value;
-            } else {
-                $difrents["-$key"] = $value;
-                $difrents["+$key"] = $filesDataAfter[$key];
-            }
-        } else {
-            $difrents["-$key"] = $value;
-        }
+    $treeForProcessing = getDataFromFiles($path1, $path2);
+    $asd = buildingAsd($treeForProcessing);
+    // print_r($asd);
+    if ($format == 'plain') {
+        $result = renderToPlain($asd);
+    } elseif ($format == 'json') {
+        $result = renderToJson($asd);
+    } else {
+        $result = renderIToStringWithBrace($asd);
     }
-    foreach ($filesDataAfter as $key => $value) {
-        if (!array_key_exists($key, $filesDataBefore)) {
-            $difrents["+$key"] = $value;
-        }
-    }
-    return [
-        'type' => $type,
-        'diffrents' => $difrents
-    ];
+    return $result;
 }

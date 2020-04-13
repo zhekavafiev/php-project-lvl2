@@ -19,8 +19,12 @@
     },
     "autoload":{
         "files": [
+            "src/formatters/toStringWithBrace.php",
+            "src/formatters/toPlain.php",
+            "src/formatters/toJson.php",
+            "src/differ.php",
             "src/parse.php",
-            "src/differ.php"
+            "src/processingTree.php"
         ],
         "PSR4": {
             "Differ\\Tests": "tests"
@@ -28,7 +32,8 @@
     },
     "require": {
         "docopt/docopt": "^1.0",
-        "symfony/yaml": "^5.0"
+        "symfony/yaml": "^5.0",
+        "funct/funct": "^1.5"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*",
