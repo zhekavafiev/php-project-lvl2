@@ -4,5 +4,20 @@
 [![Build Status](https://travis-ci.org/zhekavafiev/php-project-lvl2.svg?branch=master)](https://travis-ci.org/zhekavafiev/php-project-lvl2)
 
 ## Usage example
+
 ### With flat data
+
 [![asciicast](https://asciinema.org/a/319701.png)](https://asciinema.org/a/319701)
+
+### With nested data
+
+[![asciicast](https://asciinema.org/a/319711.png)](https://asciinema.org/a/319711)
+
+### With other format (plain)
+
+[![asciicast](https://asciinema.org/a/319715.png)](https://asciinema.org/a/319715)
+
+### With other format (json)
+
+[![asciicast](https://asciinema.org/a/319716.png)](https://asciinema.org/a/319716)
+    
