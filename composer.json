@@ -1,6 +1,6 @@
 {
     "name": "evgvfv/differ",
-    "bin": ["bin/differ"],
+    "bin": ["bin/gendiff"],
     "type": "project",
     "authors": [
         {
