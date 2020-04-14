@@ -4,8 +4,8 @@ namespace Differ\Formatters\ToStringWithBrace;
 
 function renderIToStringWithBrace($tree)
 {
-    // $acc = "{\n";
-    $string = function ($node, &$acc, $indentetion = "  ") use (&$string) {
+    $acc = "{";
+    $string = function ($node, &$acc, $indentetion = "    ") use (&$string) {
         $getLine = array_reduce($node, function ($acc, $el) use (&$string, $indentetion) {
             $acc .= $indentetion;
 
@@ -31,16 +31,16 @@ function renderIToStringWithBrace($tree)
             }
 
             if ($el['state'] == 'NotChanged' && array_key_exists('children', $el)) {
-                $acc .= "$indentetion{$el['name']}: {";
-                $newIndentetion = $indentetion . "      ";
-                return "{{$string($el['children'], $acc, $newIndentetion)}\n$indentetion  }\n";
+                $acc .= "\n  $indentetion{$el['name']}: {";
+                $newIndentetion = $indentetion . "    ";
+                return "{$string($el['children'], $acc, $newIndentetion)}\n$indentetion  }";
             }
             return $acc;
         }, $acc);
         return $getLine;
     };
-    $resultString = substr($string($tree, $acc), 3);
-    return "{\n$resultString\n}\n";
+    // $resultString = substr($string($tree, $acc));
+    return $string($tree, $acc) . "\n}\n";
 }
 
 function upgradeArrayValue($value, $otstup = '')
@@ -55,5 +55,6 @@ function upgradeArrayValue($value, $otstup = '')
             $resultString .= $strigValue[$i];
         }
     }
-    return "{\n{$otstup}      $resultString\n{$otstup}  }";
+    $result = implode("\n$otstup    ", explode(',', $resultString));
+    return "{\n{$otstup}    $result\n{$otstup}  }";
 }
