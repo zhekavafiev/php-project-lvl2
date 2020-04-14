@@ -26,8 +26,8 @@
             "src/parse.php",
             "src/processingTree.php"
         ],
-        "PSR4": {
-            "Differ\\Tests": "tests"
+        "psr-4": {
+            "\\Differ\\Tests\\": "tests"
         }
     },
     "require": {
