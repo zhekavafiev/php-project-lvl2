@@ -83,9 +83,7 @@ function buildingAsd($tree)
             }
 
             return $acc;
-        },
-            $allKeys
-        );
+        }, $allKeys);
         return $addDescriptionNode;
     };
     return $asd($before, $after, []);
