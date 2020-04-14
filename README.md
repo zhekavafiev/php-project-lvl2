@@ -15,9 +15,9 @@ Comparing data on 2 files (json, yml) and presentation diffrents to the string w
 
 `gendiff -h` - properties  
 `gendiff -v` - version  
-`gendiff gendiff --format plain before.json after.json` - get diffrents on plain format  
-`gendiff gendiff --format json before.json after.json` - get diffrents on json format  
-`gendiff gendiff before.json after.json` - get diffrents on standart format (string with brace)  
+`gendiff --format plain before.json after.json` - get diffrents on plain format  
+`gendiff --format json before.json after.json` - get diffrents on json format  
+`gendiff before.json after.json` - get diffrents on standart format (string with brace)  
 ***
 ## Usage example
 
