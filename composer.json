@@ -1,8 +1,6 @@
 {
-    "name": "evgvfv/php-project-lvl2",
-    "bin": [
-        
-    ],
+    "name": "evgvfv/differ",
+    "bin": ["bin/differ"],
     "type": "project",
     "authors": [
         {
@@ -10,8 +8,8 @@
             "email": "evgvfv@gmail.com"
         }
     ],
-    "description": "",
-    "keywords": [""],
+    "description": "differ",
+    "keywords": ["differ"],
     "license": "MIT",
     "scripts": {
         "phpcs":"phpcs",
