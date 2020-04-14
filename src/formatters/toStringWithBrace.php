@@ -31,9 +31,9 @@ function renderIToStringWithBrace($tree)
             }
 
             if ($el['state'] == 'NotChanged' && array_key_exists('children', $el)) {
-                $acc .= "\n$indentetion  {$el['name']}: {";
-                $indentetion .= "    ";
-                return $string($el['children'], $acc, $indentetion);
+                $acc .= "$indentetion{$el['name']}: {";
+                $newIndentetion = $indentetion . "      ";
+                return "{{$string($el['children'], $acc, $newIndentetion)}\n$indentetion  }\n";
             }
             return $acc;
         }, $acc);
