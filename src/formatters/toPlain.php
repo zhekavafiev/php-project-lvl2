@@ -6,7 +6,6 @@ function renderToPlain($tree)
 {
     $acc = "";
     $res = function ($node, &$acc, $road = "") use (&$res) {
-        // $acc .= "{$otstup}{\n";
         $abc = array_reduce($node, function ($acc, $el) use (&$res, $road) {
             if ($el['state'] == 'Add') {
                 $road .= "{$el['name']}";

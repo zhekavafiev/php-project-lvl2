@@ -22,7 +22,6 @@ class DiffTest extends TestCase
     public function testDiffNested()
     {
         $expected = file_get_contents("tests/fixtures/datafortestnested");
-
         $actual = genDiff("tests/fixtures/beforenested.json", "tests/fixtures/afternested.json");
         
         $this->assertEquals($expected, $actual);
@@ -30,7 +29,6 @@ class DiffTest extends TestCase
 
     public function testDiffPlain()
     {
-
         $expected = file_get_contents("tests/fixtures/datafortestplain");
         $actual = genDiff("tests/fixtures/beforenested.json", "tests/fixtures/afternested.json", 'plain');
         
@@ -39,7 +37,6 @@ class DiffTest extends TestCase
 
     public function testDiffJson()
     {
-
         $expected = file_get_contents("tests/fixtures/datafortestjson");
         $actual = genDiff("tests/fixtures/beforenested.json", "tests/fixtures/afternested.json", 'json');
         

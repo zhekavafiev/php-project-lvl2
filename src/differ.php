@@ -12,7 +12,6 @@ function genDiff($path1, $path2, $format = '')
 {
     $treeForProcessing = getDataFromFiles($path1, $path2);
     $asd = buildingAsd($treeForProcessing);
-    // print_r($asd);
     if ($format == 'plain') {
         $result = renderToPlain($asd);
     } elseif ($format == 'json') {

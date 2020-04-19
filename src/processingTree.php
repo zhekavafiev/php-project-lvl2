@@ -6,8 +6,6 @@ function buildingAsd($tree)
 {
     $before = $tree['pathsbefore'];
     $after = $tree['pathsafter'];
-    // var_dump($before);
-    // var_dump($after);
     $asd = function ($node1, $node2, $acc) use (&$asd) {
         if (!is_array($node1) || !is_array($node2)) {
             return $acc;
@@ -41,14 +39,12 @@ function buildingAsd($tree)
                 if (is_array($node1[$key])) {
                     $acc = [
                         'name' => $key,
-    
                         'value' => ($node1[$key]),
                         'state' => "Add"
                     ];
                 } else {
                     $acc = [
                         'name' => $key,
-    
                         'value' => $node1[$key],
                         'state' => "Add"
                     ];

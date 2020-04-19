@@ -4,7 +4,6 @@ namespace Differ\Formatters\ToStringWithBrace;
 
 function renderIToStringWithBrace($tree)
 {
-    // var_dump($tree);
     $acc = "{\n";
     $string = function ($node, &$acc, $indentetion = " ") use (&$string) {
         $getLine = array_reduce($node, function ($acc, $el) use (&$string, $indentetion) {
@@ -15,20 +14,32 @@ function renderIToStringWithBrace($tree)
             }
 
             if ($el['state'] == 'Add') {
-                $acc .= "$indentetion+ {$el['name']}: {$el['value']}\n";
+                if ($el['value'] === true) {
+                    $acc .= "$indentetion+ {$el['name']}: true\n";
+                } else {
+                    $acc .= "$indentetion+ {$el['name']}: {$el['value']}\n";
+                }
             }
 
             if ($el['state'] == 'Remove') {
-                $acc .= "$indentetion- {$el['name']}: {$el['value']}\n";
-            }
-
-            if ($el['state'] == 'NotChanged' && !array_key_exists('children', $el)) {
-                $acc .= "  $indentetion{$el['name']}: {$el['value']}\n";
+                if ($el['value'] === true) {
+                    $acc .= "$indentetion- {$el['name']}: true\n";
+                } else {
+                    $acc .= "$indentetion- {$el['name']}: {$el['value']}\n";
+                }
             }
 
             if ($el['state'] == 'Changed') {
                 $acc .= "$indentetion- {$el['name']}: {$el['oldValue']}\n";
                 $acc .= "$indentetion$indentetion+ {$el['name']}: {$el['newValue']}\n";
+            }
+
+            if ($el['state'] == 'NotChanged' && !array_key_exists('children', $el)) {
+                if ($el['value'] === "true") {
+                    $acc .= "  $indentetion{$el['name']}: true\n";
+                } else {
+                    $acc .= "  $indentetion{$el['name']}: {$el['value']}\n";
+                }
             }
 
             if ($el['state'] == 'NotChanged' && array_key_exists('children', $el)) {
