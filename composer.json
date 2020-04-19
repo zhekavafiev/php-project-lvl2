@@ -1,14 +1,14 @@
 {
     "name": "evgvfv/differ",
     "bin": ["bin/gendiff"],
-    "type": "project",
+    "type": "library",
     "authors": [
         {
             "name": "Evgeniy Vafiev",
             "email": "evgvfv@gmail.com"
         }
     ],
-    "description": "differ",
+    "description": "Find diffrents from to json/yml files",
     "keywords": ["differ"],
     "license": "MIT",
     "scripts": {

@@ -1,0 +1,73 @@
+[
+    {
+        "name": "common",
+        "state": "NotChanged",
+        "children": [
+            {
+                "name": "setting1",
+                "value": "Value 1",
+                "state": "NotChanged"
+            },
+            {
+                "name": "setting2",
+                "value": "200",
+                "state": "Add"
+            },
+            {
+                "name": "setting3",
+                "value": true,
+                "state": "NotChanged"
+            },
+            {
+                "name": "setting4",
+                "value": "blah blah",
+                "state": "Remove"
+            },
+            {
+                "name": "setting5",
+                "value": {
+                    "key5": "value5"
+                },
+                "state": "Remove"
+            },
+            {
+                "name": "setting6",
+                "value": {
+                    "key": "value"
+                },
+                "state": "Add"
+            }
+        ]
+    },
+    {
+        "name": "group1",
+        "state": "NotChanged",
+        "children": [
+            {
+                "name": "baz",
+                "oldValue": "bas",
+                "newValue": "bars",
+                "state": "Changed"
+            },
+            {
+                "name": "foo",
+                "value": "bar",
+                "state": "NotChanged"
+            }
+        ]
+    },
+    {
+        "name": "group2",
+        "value": {
+            "abc": "12345"
+        },
+        "state": "Add"
+    },
+    {
+        "name": "group3",
+        "value": {
+            "fee": "100500"
+        },
+        "state": "Remove"
+    }
+]
