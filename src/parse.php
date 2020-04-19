@@ -25,7 +25,7 @@ function getDataFromFiles($path1, $path2)
     } else {
         return "Files not supported";
     }
-
+    // var_dump(($pathToAfter));
     return [
         'pathsbefore' => $pathToBefore,
         'pathsafter' => $pathToAfter

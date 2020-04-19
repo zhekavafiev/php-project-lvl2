@@ -4,8 +4,9 @@ namespace Differ\Formatters\ToStringWithBrace;
 
 function renderIToStringWithBrace($tree)
 {
-    $acc = "{";
-    $string = function ($node, &$acc, $indentetion = "    ") use (&$string) {
+    // var_dump($tree);
+    $acc = "{\n";
+    $string = function ($node, &$acc, $indentetion = " ") use (&$string) {
         $getLine = array_reduce($node, function ($acc, $el) use (&$string, $indentetion) {
             $acc .= $indentetion;
 
@@ -14,47 +15,50 @@ function renderIToStringWithBrace($tree)
             }
 
             if ($el['state'] == 'Add') {
-                $acc .= "\n$indentetion+ {$el['name']}: {$el['value']}";
+                $acc .= "$indentetion+ {$el['name']}: {$el['value']}\n";
             }
 
             if ($el['state'] == 'Remove') {
-                $acc .= "\n$indentetion- {$el['name']}: {$el['value']}";
+                $acc .= "$indentetion- {$el['name']}: {$el['value']}\n";
             }
 
             if ($el['state'] == 'NotChanged' && !array_key_exists('children', $el)) {
-                $acc .= "\n$indentetion  {$el['name']}: {$el['value']}";
+                $acc .= "  $indentetion{$el['name']}: {$el['value']}\n";
             }
 
             if ($el['state'] == 'Changed') {
-                $acc .= "\n$indentetion- {$el['name']}: {$el['oldValue']}";
-                $acc .= "\n$indentetion+ {$el['name']}: {$el['newValue']}";
+                $acc .= "$indentetion- {$el['name']}: {$el['oldValue']}\n";
+                $acc .= "$indentetion$indentetion+ {$el['name']}: {$el['newValue']}\n";
             }
 
             if ($el['state'] == 'NotChanged' && array_key_exists('children', $el)) {
-                $acc .= "\n  $indentetion{$el['name']}: {";
-                $newIndentetion = $indentetion . "    ";
-                return "{$string($el['children'], $acc, $newIndentetion)}\n$indentetion  }";
+                $acc .= "  $indentetion{$el['name']}: {\n";
+                $newIndentetion = $indentetion . "  ";
+                return "{$string($el['children'], $acc, $newIndentetion)}{$indentetion}   }\n";
             }
             return $acc;
         }, $acc);
         return $getLine;
     };
-    // $resultString = substr($string($tree, $acc));
-    return $string($tree, $acc) . "\n}\n";
+
+    return $string($tree, $acc) . "}\n";
 }
 
-function upgradeArrayValue($value, $otstup = '')
+function upgradeArrayValue($value, $otstup = '  ')
 {
     $resultString = '';
     $strigValue = json_encode($value);
     for ($i = 0; $i < strlen($strigValue); $i++) {
         if (
-            $strigValue[$i] != "'" && $strigValue[$i] != "\"" && $strigValue[$i] != " "
+            $strigValue[$i] != "'" && $strigValue[$i] != "\""
             && $strigValue[$i] != "{" && $strigValue[$i] != "}"
         ) {
+            if ($strigValue[$i] == ":") {
+                $resultString .= ": ";
+                continue;
+            }
             $resultString .= $strigValue[$i];
         }
     }
-    $result = implode("\n$otstup    ", explode(',', $resultString));
-    return "{\n{$otstup}    $result\n{$otstup}  }";
+    return "{\n{$otstup}{$otstup}      $resultString\n{$otstup}{$otstup}  }";
 }
