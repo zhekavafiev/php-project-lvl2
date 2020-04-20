@@ -17,7 +17,7 @@ jobs:
       run: make install
 
     - name: check linter 
-      run: name lint
+      run: make lint
       
     - name: Run test and generate test coverage
       uses: paambaati/codeclimate-action@v2.4.0
