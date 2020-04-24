@@ -8,21 +8,18 @@ use function Differ\Differ\genDiff;
 
 class DiffTest extends TestCase
 {
-    public function testDiffFlat()
-    {
-        $expected = file_get_contents("tests/fixtures/datafortestflat");
-
-        $actual1 = genDiff("tests/fixtures/beforeflat.json", "tests/fixtures/afterflat.json");
-        $actual2 = genDiff("tests/fixtures/beforeflat.yml", "tests/fixtures/afterflat.yml");
-        
-        $this->assertEquals($expected, $actual1);
-        $this->assertEquals($expected, $actual2);
-    }
-
-    public function testDiffNested()
+    public function testDiffNestedJson()
     {
         $expected = file_get_contents("tests/fixtures/datafortestnested");
-        $actual = genDiff("tests/fixtures/beforenested.json", "tests/fixtures/afternested.json");
+        $actual = genDiff("tests/fixtures/BeforeNestedJson.json", "tests/fixtures/afternested.json");
+        
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testDiffNestedYml()
+    {
+        $expected = file_get_contents("tests/fixtures/datafortestnested");
+        $actual = genDiff("tests/fixtures/BeforeNestedYml.yml", "tests/fixtures/AfterNestedYml.yml");
         
         $this->assertEquals($expected, $actual);
     }
@@ -30,7 +27,7 @@ class DiffTest extends TestCase
     public function testDiffPlain()
     {
         $expected = file_get_contents("tests/fixtures/datafortestplain");
-        $actual = genDiff("tests/fixtures/beforenested.json", "tests/fixtures/afternested.json", 'plain');
+        $actual = genDiff("tests/fixtures/BeforeNestedJson.json", "tests/fixtures/afternested.json", 'plain');
         
         $this->assertEquals($expected, $actual);
     }
@@ -38,7 +35,7 @@ class DiffTest extends TestCase
     public function testDiffJson()
     {
         $expected = file_get_contents("tests/fixtures/datafortestjson");
-        $actual = genDiff("tests/fixtures/beforenested.json", "tests/fixtures/afternested.json", 'json');
+        $actual = genDiff("tests/fixtures/BeforeNestedJson.json", "tests/fixtures/afternested.json", 'json');
         
         $this->assertEquals($expected, $actual);
     }
