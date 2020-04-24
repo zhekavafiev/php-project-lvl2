@@ -1,0 +1,28 @@
+name: Differ-CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: PHP Setup
+      uses: shivammathur/setup-php@v1
+
+    - name: Composer Install
+      run: make install
+
+    - name: check linter 
+      run: make lint
+      
+    - name: Run test and generate test coverage
+      uses: paambaati/codeclimate-action@v2.4.0
+      env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: make test
+        debug: true
