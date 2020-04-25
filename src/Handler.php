@@ -1,11 +1,9 @@
 <?php
 
-namespace Differ\ProcessingTree;
+namespace Differ\Hundler;
 
-function buildingAsd($tree)
+function buildingAst($before, $after)
 {
-    $before = $tree['pathsbefore'];
-    $after = $tree['pathsafter'];
     $asd = function ($node1, $node2, $acc) use (&$asd) {
         if (!is_array($node1) || !is_array($node2)) {
             return $acc;

@@ -17,12 +17,13 @@
     },
     "autoload":{
         "files": [
-            "src/formatters/toStringWithBrace.php",
-            "src/formatters/toPlain.php",
-            "src/formatters/toJson.php",
-            "src/differ.php",
-            "src/parse.php",
-            "src/processingTree.php"
+            "src/Formatters/ToStringWithBrace.php",
+            "src/Formatters/ToPlain.php",
+            "src/Formatters/ToJson.php",
+            "src/Differ.php",
+            "src/Parser.php",
+            "src/Render.php",
+            "src/Handler.php"
         ],
         "psr-4": {
             "\\Differ\\Tests\\": "tests"
