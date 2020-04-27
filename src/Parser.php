@@ -5,16 +5,14 @@ namespace Differ\Parser;
 use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
-function parse($path)
+function parse($path, $format)
 {
-    $fileInfo = new SplFileInfo($path);
-    $extention = $fileInfo->getExtension();
-    switch ($extention) {
+    switch ($format) {
         case 'json':
-            return json_decode(file_get_contents($path), true);
-            break;
+            return json_decode($path, true);
         case 'yml':
-            return Yaml::parse(file_get_contents($path));
-            break;
+            return Yaml::parse($path);
+        case 'yaml':
+            return Yaml::parse($path);
     }
 }
