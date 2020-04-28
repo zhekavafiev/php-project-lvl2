@@ -14,8 +14,6 @@ function buildingAst($before, $after)
 
         $keysData2 = array_keys($node2);
         // print_r($keysData2);
-
-        // $allKeys = collect($keysData1)->concat($keysData2)->all();
         $allKeys = array_unique(array_merge($keysData1, $keysData2));
         sort($allKeys);
         // print_r($allKeys);
