@@ -4,7 +4,7 @@ namespace Differ\Hundler;
 
 function buildingAst($before, $after)
 {
-    $asd = function ($node1, $node2, $acc) use (&$asd) {
+    $ast = function ($node1, $node2, $acc) use (&$ast) {
         if (!is_array($node1) || !is_array($node2)) {
             return $acc;
         }
@@ -14,7 +14,7 @@ function buildingAst($before, $after)
         $allKeys = collect($node1)->union($node2)->keys()->all();
         sort($allKeys);
         
-        $addDescriptionNode = array_map(function ($key) use ($keysData2, $keysData1, $node1, $node2, $acc, &$asd) {
+        $addDescriptionNode = array_map(function ($key) use ($keysData2, $keysData1, $node1, $node2, $acc, &$ast) {
             if (!in_array($key, $keysData1) && in_array($key, $keysData2)) {
                 if (is_array($node2[$key])) {
                     $acc = [
@@ -56,7 +56,7 @@ function buildingAst($before, $after)
                 $acc = [
                     'name' => $key,
                     'state' => "NotChanged",
-                    'children' => $asd($node1[$key], $node2[$key], $acc)
+                    'children' => $ast($node1[$key], $node2[$key], $acc)
                 ];
             }
 
@@ -82,5 +82,5 @@ function buildingAst($before, $after)
         }, $allKeys);
         return $addDescriptionNode;
     };
-    return $asd($before, $after, []);
+    return $ast($before, $after, []);
 }
