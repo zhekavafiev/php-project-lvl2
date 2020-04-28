@@ -13,75 +13,48 @@ class DiffTest extends TestCase
      * @dataProvider checkRenderWithBraceProvider
      */
 
-    public function testDiffNested($path1, $path2, $expected)
+    public function testDiffNested($fileName1, $fileName2, $format, $expected)
     {
-        $this->assertSame($expected, genDiff(normalizePath(__DIR__ . $path1), normalizePath(__DIR__ . $path2)));
+        $this->assertSame($expected, genDiff(getNormalisedPath($fileName1), getNormalisedPath($fileName2), $format));
     }
 
     public function checkRenderWithBraceProvider()
     {
-        $pathForTestData = '/fixtures/datafortestnested';
-        $expected = file_get_contents(normalizePath(__DIR__ . $pathForTestData));
+        $format1 = '';
+        $format2 = 'plain';
+        $format3 = 'json';
 
-        $pathBeforeFile1 = '/fixtures/BeforeNestedJson.json';
-        $pathAfterFile1 = '/fixtures/afternested.json';
+        $expectedFileName1 = 'StringTestNested';
+        $expectedFileName2 = 'StringTestPlain';
+        $expectedFileName3 = 'StringTestJson';
 
-        $pathBeforeFile2 = '/fixtures/BeforeNestedYml.yml';
-        $pathAfterFile2 = '/fixtures/AfterNestedYml.yml';
+        $expected1 = file_get_contents(getNormalisedPath($expectedFileName1));
+        $expected2 = file_get_contents(getNormalisedPath($expectedFileName2));
+        $expected3 = file_get_contents(getNormalisedPath($expectedFileName3));
 
+        $actualFirstFileName1 = 'BeforeNested.json';
+        $actualSecondFileName1 = 'AfterNested.json';
+
+        $actualFirstFileName2 = 'BeforeNested.yml';
+        $actualSecondFileName2 = 'AfterNested.yml';
 
         return [
-            [$pathBeforeFile1, $pathAfterFile1, $expected],
-            [$pathBeforeFile2, $pathAfterFile2, $expected],
-            [$pathBeforeFile1, $pathAfterFile2, $expected],
+            [$actualFirstFileName1, $actualSecondFileName1, $format1, $expected1],
+            [$actualFirstFileName2, $actualSecondFileName2, $format1, $expected1],
+            [$actualFirstFileName1, $actualSecondFileName2, $format1, $expected1],
+            [$actualFirstFileName1, $actualSecondFileName1, $format2, $expected2],
+            [$actualFirstFileName1, $actualSecondFileName1, $format3, $expected3],
         ];
     }
-
-    // public function testDiffNestedJson()
-    // {
-    //     $pathForTestData = '/fixtures/datafortestnested';
-    //     $pathBeforeFile = '/fixtures/BeforeNestedJson.json';
-    //     $pathAfterFile = '/fixtures/afternested.json';
-
-    //     $expected = file_get_contents(normalizePath(__DIR__ . $pathForTestData));
-    //     $actual = genDiff(normalizePath(__DIR__ . $pathBeforeFile), normalizePath(__DIR__ . $pathAfterFile));
-        
-    //     $this->assertEquals($expected, $actual);
-    // }
-
-    // public function testDiffNestedYml()
-    // {
-    //     $pathForTestData = '/fixtures/datafortestnested';
-    //     $pathBeforeFile = '/fixtures/BeforeNestedYml.yml';
-    //     $pathAfterFile = '/fixtures/AfterNestedYml.yml';
-
-    //     $expected = file_get_contents(normalizePath(__DIR__ . $pathForTestData));
-    //     $actual = genDiff(normalizePath(__DIR__ . $pathBeforeFile), normalizePath(__DIR__ . $pathAfterFile));
-        
-    //     $this->assertEquals($expected, $actual);
-    // }
-
-    public function testDiffPlain()
-    {
-        $pathForTestData = '/fixtures/datafortestplain';
-        $pathBeforeFile = '/fixtures/BeforeNestedJson.json';
-        $pathAfterFile = '/fixtures/afternested.json';
-
-        $expected = file_get_contents(normalizePath(__DIR__ . $pathForTestData));
-        $actual = genDiff(normalizePath(__DIR__ . $pathBeforeFile), normalizePath(__DIR__ . $pathAfterFile), 'plain');
-        
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testDiffJson()
-    {
-        $pathForTestData = '/fixtures/datafortestjson';
-        $pathBeforeFile = '/fixtures/BeforeNestedJson.json';
-        $pathAfterFile = '/fixtures/afternested.json';
-        
-        $expected = file_get_contents(normalizePath(__DIR__ . $pathForTestData));
-        $actual = genDiff(normalizePath(__DIR__ . $pathBeforeFile), normalizePath(__DIR__ . $pathAfterFile), 'json');
-        
-        $this->assertEquals($expected, $actual);
-    }
 }
+
+function getNormalisedPath($fileName)
+{
+    $absolutePath = realpath(__DIR__) . "/fixtures";
+    $arrayPath = explode('/', $absolutePath);
+    $arrayPath[] = $fileName;
+    $normalizedPath = implode(DIRECTORY_SEPARATOR, $arrayPath);
+    return $normalizedPath;
+}
+
+// var_dump(getNormalisedPath('abc.abs'));
