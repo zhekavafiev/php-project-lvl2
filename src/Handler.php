@@ -10,13 +10,9 @@ function buildingAst($before, $after)
         }
 
         $keysData1 = array_keys($node1);
-        // print_r($keysData1);
-
         $keysData2 = array_keys($node2);
-        // print_r($keysData2);
-        $allKeys = array_unique(array_merge($keysData1, $keysData2));
+        $allKeys = collect($node1)->union($node2)->keys()->all();
         sort($allKeys);
-        // print_r($allKeys);
         
         $addDescriptionNode = array_map(function ($key) use ($keysData2, $keysData1, $node1, $node2, $acc, &$asd) {
             if (!in_array($key, $keysData1) && in_array($key, $keysData2)) {
