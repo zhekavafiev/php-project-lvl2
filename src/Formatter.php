@@ -2,19 +2,17 @@
 
 namespace Differ\Formatter;
 
-use function Differ\Formatters\ToPlain\renderToPlain;
-use function Differ\Formatters\ToJson\renderToJson;
-use function Differ\Formatters\ToStringWithBrace\renderIToStringWithBrace;
-
 function render($tree, $format)
 {
     switch ($format) {
         case 'plain':
-            return renderToPlain($tree);
+            return \Differ\Formatters\Plain\render($tree);
         case 'json':
-            return renderToJson($tree);
+            return \Differ\Formatters\Json\render($tree);
         case '':
-            return renderIToStringWithBrace($tree);
+            return \Differ\Formatters\Pretty\render($tree);
+        case 'pretty':
+            return \Differ\Formatters\Pretty\render($tree);
         default:
             echo "Error. File's format not supported." . PHP_EOL;
             break;

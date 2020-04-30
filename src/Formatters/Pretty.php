@@ -1,8 +1,8 @@
 <?php
 
-namespace Differ\Formatters\ToStringWithBrace;
+namespace Differ\Formatters\Pretty;
 
-function renderIToStringWithBrace($tree)
+function render($tree)
 {
     $acc = "{\n";
     $string = function ($node, &$acc, $indentetion = " ") use (&$string) {

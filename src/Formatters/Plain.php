@@ -1,8 +1,8 @@
 <?php
 
-namespace Differ\Formatters\ToPlain;
+namespace Differ\Formatters\Plain;
 
-function renderToPlain($tree)
+function render($tree)
 {
     $acc = "";
     $res = function ($node, &$acc, $road = "") use (&$res) {

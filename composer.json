@@ -17,9 +17,9 @@
     },
     "autoload":{
         "files": [
-            "src/Formatters/ToStringWithBrace.php",
-            "src/Formatters/ToPlain.php",
-            "src/Formatters/ToJson.php",
+            "src/Formatters/Json.php",
+            "src/Formatters/Plain.php",
+            "src/Formatters/Pretty.php",
             "src/Differ.php",
             "src/Parser.php",
             "src/Formatter.php",
