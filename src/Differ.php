@@ -11,12 +11,12 @@ use function Differ\Render\render;
 function genDiff($path1, $path2, $format = '')
 {
     $firstFileNormalizedPath = normalizePath($path1);
-    $firstFileData = readFileByPath($firstFileNormalizedPath);
+    $firstFileData = file_get_contents($firstFileNormalizedPath);
     $firstFileFormat = getFormatFile($path1);
     $parsedFirstFileData = parse($firstFileData, $firstFileFormat);
     
     $secondFileNormalizedPath = normalizePath($path2);
-    $secondFileData = readFileByPath($secondFileNormalizedPath);
+    $secondFileData = file_get_contents($secondFileNormalizedPath);
     $secondFileFormat = getFormatFile($path2);
     $parsedSecondFileData = parse($secondFileData, $secondFileFormat);
 
@@ -26,19 +26,11 @@ function genDiff($path1, $path2, $format = '')
 
 function normalizePath($path)
 {
-    $absolutePath = realpath($path);
-    $arrayPath = explode('/', $absolutePath);
-    $normalizedPath = implode(DIRECTORY_SEPARATOR, $arrayPath);
-    return $normalizedPath;
-}
-
-function readFileByPath($normalizedPath)
-{
-    return file_get_contents($normalizedPath);
+    return realpath($path);
 }
 
 function getFormatFile($path)
 {
-    $fileInfo = new SplFileInfo($path);
-    return $fileInfo->getExtension();
+    $fileInfo = pathinfo($path);
+    return $fileInfo['extension'];
 }

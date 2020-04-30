@@ -15,7 +15,7 @@ class DiffTest extends TestCase
 
     public function testDiffNested($fileName1, $fileName2, $format, $expected)
     {
-        $this->assertSame($expected, genDiff(getNormalisedPath($fileName1), getNormalisedPath($fileName2), $format));
+        $this->assertSame($expected, genDiff(getFilePath($fileName1), getFilePath($fileName2), $format));
     }
 
     public function checkRenderWithBraceProvider()
@@ -28,9 +28,9 @@ class DiffTest extends TestCase
         $expectedFileName2 = 'StringTestPlain';
         $expectedFileName3 = 'StringTestJson';
 
-        $expected1 = file_get_contents(getNormalisedPath($expectedFileName1));
-        $expected2 = file_get_contents(getNormalisedPath($expectedFileName2));
-        $expected3 = file_get_contents(getNormalisedPath($expectedFileName3));
+        $expected1 = file_get_contents(getFilePath($expectedFileName1));
+        $expected2 = file_get_contents(getFilePath($expectedFileName2));
+        $expected3 = file_get_contents(getFilePath($expectedFileName3));
 
         $actualFirstFileName1 = 'BeforeNested.json';
         $actualSecondFileName1 = 'AfterNested.json';
@@ -48,13 +48,8 @@ class DiffTest extends TestCase
     }
 }
 
-function getNormalisedPath($fileName)
+function getFilePath($fileName)
 {
-    $absolutePath = realpath(__DIR__) . "/fixtures";
-    $arrayPath = explode('/', $absolutePath);
-    $arrayPath[] = $fileName;
-    $normalizedPath = implode(DIRECTORY_SEPARATOR, $arrayPath);
-    return $normalizedPath;
+    $absolutePath = realpath(__DIR__ . DIRECTORY_SEPARATOR . "fixtures" . DIRECTORY_SEPARATOR . $fileName);
+    return $absolutePath;
 }
-
-// var_dump(getNormalisedPath('abc.abs'));
