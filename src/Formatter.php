@@ -10,7 +10,6 @@ function render($tree, $format)
         case 'json':
             return \Differ\Formatters\Json\render($tree);
         case '':
-            return \Differ\Formatters\Pretty\render($tree);
         case 'pretty':
             return \Differ\Formatters\Pretty\render($tree);
         default:
