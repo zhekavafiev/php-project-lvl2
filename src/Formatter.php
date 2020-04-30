@@ -9,11 +9,9 @@ function render($tree, $format)
             return \Differ\Formatters\Plain\render($tree);
         case 'json':
             return \Differ\Formatters\Json\render($tree);
-        case '':
         case 'pretty':
             return \Differ\Formatters\Pretty\render($tree);
         default:
-            echo "Error. File's format not supported." . PHP_EOL;
-            break;
+            throw new \Exception("{$format} - not supporeted format");
     }
 }

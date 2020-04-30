@@ -6,7 +6,7 @@ use function Differ\Parser\parse;
 use function Differ\Hundler\buildingAst;
 use function Differ\Formatter\render;
 
-function genDiff($path1, $path2, $format = '')
+function genDiff($path1, $path2, $format = 'pretty')
 {
     $normalizedPath1 = normalizePath($path1);
     $rawData1 = file_get_contents($normalizedPath1);

@@ -20,23 +20,23 @@ class DiffTest extends TestCase
 
     public function checkRenderWithBraceProvider()
     {
-        $format1 = '';
+        $format1 = 'pretty';
         $format2 = 'plain';
         $format3 = 'json';
 
-        $expectedFileName1 = 'StringTestNested';
-        $expectedFileName2 = 'StringTestPlain';
-        $expectedFileName3 = 'StringTestJson';
+        $expectedFileName1 = 'test_pretty';
+        $expectedFileName2 = 'test_plain';
+        $expectedFileName3 = 'test_json';
 
         $expected1 = file_get_contents(getFilePath($expectedFileName1));
         $expected2 = file_get_contents(getFilePath($expectedFileName2));
         $expected3 = file_get_contents(getFilePath($expectedFileName3));
 
-        $actualFirstFileName1 = 'BeforeNested.json';
-        $actualSecondFileName1 = 'AfterNested.json';
+        $actualFirstFileName1 = 'before_nested.json';
+        $actualSecondFileName1 = 'after_nested.json';
 
-        $actualFirstFileName2 = 'BeforeNested.yml';
-        $actualSecondFileName2 = 'AfterNested.yml';
+        $actualFirstFileName2 = 'before_nested.yml';
+        $actualSecondFileName2 = 'after_nested.yml';
 
         return [
             [$actualFirstFileName1, $actualSecondFileName1, $format1, $expected1],
