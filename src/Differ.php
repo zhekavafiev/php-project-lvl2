@@ -8,17 +8,17 @@ use function Differ\Formatter\render;
 
 function genDiff($path1, $path2, $format = '')
 {
-    $firstFileNormalizedPath = normalizePath($path1);
-    $firstFileData = file_get_contents($firstFileNormalizedPath);
-    $firstFileFormat = getFormatFile($path1);
-    $parsedFirstFileData = parse($firstFileData, $firstFileFormat);
+    $normalizedPath1 = normalizePath($path1);
+    $rawData1 = file_get_contents($normalizedPath1);
+    $dataType1 = getTypeFile($path1);
+    $parsedData1 = parse($rawData1, $dataType1);
     
-    $secondFileNormalizedPath = normalizePath($path2);
-    $secondFileData = file_get_contents($secondFileNormalizedPath);
-    $secondFileFormat = getFormatFile($path2);
-    $parsedSecondFileData = parse($secondFileData, $secondFileFormat);
+    $normalizedPath2 = normalizePath($path2);
+    $rawData2 = file_get_contents($normalizedPath2);
+    $dataType2 = getTypeFile($path2);
+    $parsedData2 = parse($rawData2, $dataType2);
 
-    $internalTree = buildingAst($parsedFirstFileData, $parsedSecondFileData);
+    $internalTree = buildingAst($parsedData1, $parsedData2);
     return render($internalTree, $format);
 }
 
@@ -27,7 +27,7 @@ function normalizePath($path)
     return realpath($path);
 }
 
-function getFormatFile($path)
+function getTypeFile($path)
 {
     $fileInfo = pathinfo($path);
     return $fileInfo['extension'];
