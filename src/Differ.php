@@ -2,11 +2,9 @@
 
 namespace Differ\Differ;
 
-use SplFileInfo;
-
 use function Differ\Parser\parse;
 use function Differ\Hundler\buildingAst;
-use function Differ\Render\render;
+use function Differ\Formatter\render;
 
 function genDiff($path1, $path2, $format = '')
 {

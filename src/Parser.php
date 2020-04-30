@@ -2,7 +2,6 @@
 
 namespace Differ\Parser;
 
-use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 function parse($path, $format)

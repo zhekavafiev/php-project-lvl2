@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\Render;
+namespace Differ\Formatter;
 
 use function Differ\Formatters\ToPlain\renderToPlain;
 use function Differ\Formatters\ToJson\renderToJson;

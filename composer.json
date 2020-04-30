@@ -22,7 +22,7 @@
             "src/Formatters/ToJson.php",
             "src/Differ.php",
             "src/Parser.php",
-            "src/Render.php",
+            "src/Formatter.php",
             "src/Handler.php"
         ],
         "psr-4": {
