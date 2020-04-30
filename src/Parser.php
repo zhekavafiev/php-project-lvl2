@@ -12,5 +12,7 @@ function parse($path, $format)
         case 'yml':
         case 'yaml':
             return Yaml::parse($path);
+        default:
+            throw new \Exception("{$format} not supported");
     }
 }
