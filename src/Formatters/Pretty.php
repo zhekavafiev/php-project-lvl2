@@ -30,8 +30,8 @@ function render($tree)
             }
 
             if ($el['state'] == 'Changed') {
-                $acc .= "$indentetion- {$el['name']}: {$el['oldValue']}\n";
-                $acc .= "$indentetion$indentetion+ {$el['name']}: {$el['newValue']}\n";
+                $acc .= "$indentetion+ {$el['name']}: {$el['newValue']}\n";
+                $acc .= "$indentetion$indentetion- {$el['name']}: {$el['oldValue']}\n";
             }
 
             if ($el['state'] == 'Unchanged' && !array_key_exists('children', $el)) {

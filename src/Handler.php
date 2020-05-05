@@ -13,13 +13,13 @@ function buildAst($node1, $node2)
                 return [
                     'name' => $key,
                     'value' => $node2->$key,
-                    'state' => "Removed"
+                    'state' => "Added"
                 ];
             } elseif (is_object($node2->$key)) {
                 return [
                     'name' => $key,
                     'value' => (array) $node2->$key,
-                    'state' => "Removed"
+                    'state' => "Added"
                 ];
             }
         }
@@ -29,13 +29,13 @@ function buildAst($node1, $node2)
                 return [
                     'name' => $key,
                     'value' => $node1->$key,
-                    'state' => "Added"
+                    'state' => "Removed"
                 ];
             } elseif (is_object($node1->$key)) {
                 return [
                     'name' => $key,
                     'value' => (array) $node1->$key,
-                    'state' => "Added"
+                    'state' => "Removed"
                 ];
             }
         }

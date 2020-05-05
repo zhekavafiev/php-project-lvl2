@@ -1,47 +1,47 @@
 [
     {
         "name": "common",
-        "state": "NotChanged",
+        "state": "Unchanged",
         "children": [
             {
                 "name": "setting1",
                 "value": "Value 1",
-                "state": "NotChanged"
+                "state": "Unchanged"
             },
             {
                 "name": "setting2",
                 "value": "200",
-                "state": "Add"
+                "state": "Removed"
             },
             {
                 "name": "setting3",
                 "value": true,
-                "state": "NotChanged"
-            },
-            {
-                "name": "setting4",
-                "value": "blah blah",
-                "state": "Remove"
-            },
-            {
-                "name": "setting5",
-                "value": {
-                    "key5": "value5"
-                },
-                "state": "Remove"
+                "state": "Unchanged"
             },
             {
                 "name": "setting6",
                 "value": {
                     "key": "value"
                 },
-                "state": "Add"
+                "state": "Removed"
+            },
+            {
+                "name": "setting4",
+                "value": "blah blah",
+                "state": "Added"
+            },
+            {
+                "name": "setting5",
+                "value": {
+                    "key5": "value5"
+                },
+                "state": "Added"
             }
         ]
     },
     {
         "name": "group1",
-        "state": "NotChanged",
+        "state": "Unchanged",
         "children": [
             {
                 "name": "baz",
@@ -52,7 +52,7 @@
             {
                 "name": "foo",
                 "value": "bar",
-                "state": "NotChanged"
+                "state": "Unchanged"
             }
         ]
     },
@@ -61,13 +61,13 @@
         "value": {
             "abc": "12345"
         },
-        "state": "Add"
+        "state": "Removed"
     },
     {
         "name": "group3",
         "value": {
             "fee": "100500"
         },
-        "state": "Remove"
+        "state": "Added"
     }
 ]
