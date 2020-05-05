@@ -4,12 +4,10 @@ namespace Differ\Formatters\Pretty;
 
 function render($tree)
 {
-    // print_r($tree);
-    $acc = "{\n";
-    $getString = function ($node, &$acc, $indentetion = " ") use (&$getString) {
-        $getLine = array_reduce($node, function ($acc, $el) use (&$getString, $indentetion) {
-            // print_r($el);
-            $acc .= $indentetion;
+    $resultStrint = "{\n";
+    $getString = function ($node, &$resultStrint, $indentetion = " ") use (&$getString) {
+        $getLine = array_reduce($node, function ($resultStrint, $el) use (&$getString, $indentetion) {
+            $resultStrint .= $indentetion;
 
             if (array_key_exists('newValue', $el) && is_array($el['newValue'])) {
                 $el['newValue'] = upgradeArrayValue($el['newValue'], $indentetion);
@@ -21,47 +19,47 @@ function render($tree)
 
             if ($el['type'] == 'Added') {
                 if ($el['oldValue'] === true) {
-                    $acc .= "$indentetion+ {$el['name']}: true\n";
+                    $resultStrint .= "$indentetion+ {$el['name']}: true\n";
                 } else {
-                    $acc .= "$indentetion+ {$el['name']}: {$el['oldValue']}\n";
+                    $resultStrint .= "$indentetion+ {$el['name']}: {$el['oldValue']}\n";
                 }
             }
 
             if ($el['type'] == 'Removed') {
                 if ($el['newValue'] === true) {
-                    $acc .= "$indentetion- {$el['name']}: true\n";
+                    $resultStrint .= "$indentetion- {$el['name']}: true\n";
                 } else {
-                    $acc .= "$indentetion- {$el['name']}: {$el['newValue']}\n";
+                    $resultStrint .= "$indentetion- {$el['name']}: {$el['newValue']}\n";
                 }
             }
 
             if ($el['type'] == 'Changed') {
-                $acc .= "$indentetion+ {$el['name']}: {$el['newValue']}\n";
-                $acc .= "$indentetion$indentetion- {$el['name']}: {$el['oldValue']}\n";
+                $resultStrint .= "$indentetion+ {$el['name']}: {$el['newValue']}\n";
+                $resultStrint .= "$indentetion$indentetion- {$el['name']}: {$el['oldValue']}\n";
             }
 
             if ($el['type'] == 'Unchanged' && empty($el['children'])) {
                 if ($el['newValue'] === true) {
-                    $acc .= "  $indentetion{$el['name']}: true\n";
+                    $resultStrint .= "  $indentetion{$el['name']}: true\n";
                 } else {
-                    $acc .= "  $indentetion{$el['name']}: {$el['newValue']}\n";
+                    $resultStrint .= "  $indentetion{$el['name']}: {$el['newValue']}\n";
                 }
             }
 
             if ($el['type'] == 'Nested') {
-                $acc .= "  $indentetion{$el['name']}: {\n";
+                $resultStrint .= "  $indentetion{$el['name']}: {\n";
                 $newIndentetion = $indentetion . "  ";
-                return "{$getString($el['children'], $acc, $newIndentetion)}{$indentetion}   }\n";
+                return "{$getString($el['children'], $resultStrint, $newIndentetion)}{$indentetion}   }\n";
             }
-            return $acc;
-        }, $acc);
+            return $resultStrint;
+        }, $resultStrint);
         return $getLine;
     };
 
-    return $getString($tree, $acc) . "}\n";
+    return $getString($tree, $resultStrint) . "}\n";
 }
 
-function upgradeArrayValue($value, $otstup = '  ')
+function upgradeArrayValue($value, $indentetion = '  ')
 {
     $resultString = '';
     $strigValue = json_encode($value);
@@ -77,5 +75,5 @@ function upgradeArrayValue($value, $otstup = '  ')
             $resultString .= $strigValue[$i];
         }
     }
-    return "{\n{$otstup}{$otstup}      $resultString\n{$otstup}{$otstup}  }";
+    return "{\n{$indentetion}{$indentetion}      $resultString\n{$indentetion}{$indentetion}  }";
 }

@@ -8,7 +8,7 @@ function parse($path, $format)
 {
     switch ($format) {
         case 'json':
-            return json_decode($path/*, true*/);
+            return json_decode($path);
         case 'yml':
         case 'yaml':
             return Yaml::parse($path, Yaml::PARSE_OBJECT_FOR_MAP);

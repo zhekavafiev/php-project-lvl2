@@ -10,15 +10,15 @@ use function Differ\Differ\genDiff;
 class DiffTest extends TestCase
 {
     /**
-     * @dataProvider checkRenderWithBraceProvider
+     * @dataProvider chechRender
      */
 
-    public function testDiffNested($fileName1, $fileName2, $format, $expected)
+    public function testDiff($fileName1, $fileName2, $format, $expected)
     {
         $this->assertSame($expected, genDiff(getFilePath($fileName1), getFilePath($fileName2), $format));
     }
 
-    public function checkRenderWithBraceProvider()
+    public function chechRender()
     {
         $format1 = 'pretty';
         $format2 = 'plain';
