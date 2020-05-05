@@ -7,29 +7,29 @@ function render($tree)
     $acc = "";
     $res = function ($node, &$acc, $road = "") use (&$res) {
         $abc = array_reduce($node, function ($acc, $el) use (&$res, $road) {
-            if ($el['state'] == 'Added') {
+            if ($el['type'] == 'Added') {
                 $road .= "{$el['name']}";
-                if (!is_array($el['value'])) {
+                if (!is_array($el['oldValue'])) {
                     $acc .=
-                    "Property '{$road}' was added with value: '{$el['value']}'\n";
+                    "Property '{$road}' was added with value: '{$el['oldValue']}'\n";
                 } else {
                     $acc .=
                     "Property '{$road}' was added with value: 'complex value'\n";
                 }
             }
 
-            if ($el['state'] == 'Removed') {
+            if ($el['type'] == 'Removed') {
                 $road .= "{$el['name']}";
                 $acc .= "Property '{$road}' was removed\n";
             }
 
-            if ($el['state'] == 'Changed') {
+            if ($el['type'] == 'Changed') {
                 $road .= "{$el['name']}";
                 $acc .=
                 "Property '{$road}' was changed. From '{$el['oldValue']}' to '{$el['newValue']}'\n";
             }
 
-            if ($el['state'] == 'Unchanged' && array_key_exists('children', $el)) {
+            if ($el['type'] == 'Nested') {
                 $road .= "{$el['name']}.";
                 return $res($el['children'], $acc, $road);
             }
