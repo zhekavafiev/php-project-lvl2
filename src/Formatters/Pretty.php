@@ -13,7 +13,7 @@ function render($tree)
                 $el['value'] = upgradeArrayValue($el['value'], $indentetion);
             }
 
-            if ($el['state'] == 'Add') {
+            if ($el['state'] == 'Added') {
                 if ($el['value'] === true) {
                     $acc .= "$indentetion+ {$el['name']}: true\n";
                 } else {
@@ -21,7 +21,7 @@ function render($tree)
                 }
             }
 
-            if ($el['state'] == 'Remove') {
+            if ($el['state'] == 'Removed') {
                 if ($el['value'] === true) {
                     $acc .= "$indentetion- {$el['name']}: true\n";
                 } else {
@@ -34,7 +34,7 @@ function render($tree)
                 $acc .= "$indentetion$indentetion+ {$el['name']}: {$el['newValue']}\n";
             }
 
-            if ($el['state'] == 'NotChanged' && !array_key_exists('children', $el)) {
+            if ($el['state'] == 'Unchanged' && !array_key_exists('children', $el)) {
                 if ($el['value'] === true) {
                     $acc .= "  $indentetion{$el['name']}: true\n";
                 } else {
@@ -42,7 +42,7 @@ function render($tree)
                 }
             }
 
-            if ($el['state'] == 'NotChanged' && array_key_exists('children', $el)) {
+            if ($el['state'] == 'Unchanged' && array_key_exists('children', $el)) {
                 $acc .= "  $indentetion{$el['name']}: {\n";
                 $newIndentetion = $indentetion . "  ";
                 return "{$getString($el['children'], $acc, $newIndentetion)}{$indentetion}   }\n";
