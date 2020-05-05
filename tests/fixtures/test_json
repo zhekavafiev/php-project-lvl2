@@ -1,73 +1,96 @@
-[
-    {
+{
+    "0": {
         "name": "common",
-        "state": "Unchanged",
-        "children": [
-            {
+        "type": "Nested",
+        "newValue": null,
+        "oldValue": null,
+        "children": {
+            "0": {
                 "name": "setting1",
-                "value": "Value 1",
-                "state": "Unchanged"
+                "type": "Unchanged",
+                "newValue": "Value 1",
+                "oldValue": null,
+                "children": null
             },
-            {
+            "1": {
                 "name": "setting2",
-                "value": "200",
-                "state": "Removed"
+                "type": "Removed",
+                "newValue": "200",
+                "oldValue": null,
+                "children": null
             },
-            {
+            "2": {
                 "name": "setting3",
-                "value": true,
-                "state": "Unchanged"
+                "type": "Unchanged",
+                "newValue": true,
+                "oldValue": null,
+                "children": null
             },
-            {
+            "3": {
                 "name": "setting6",
-                "value": {
+                "type": "Removed",
+                "newValue": {
                     "key": "value"
                 },
-                "state": "Removed"
+                "oldValue": null,
+                "children": null
             },
-            {
+            "6": {
                 "name": "setting4",
-                "value": "blah blah",
-                "state": "Added"
+                "type": "Added",
+                "newValue": null,
+                "oldValue": "blah blah",
+                "children": null
             },
-            {
+            "7": {
                 "name": "setting5",
-                "value": {
+                "type": "Added",
+                "newValue": null,
+                "oldValue": {
                     "key5": "value5"
                 },
-                "state": "Added"
+                "children": null
             }
-        ]
+        }
     },
-    {
+    "1": {
         "name": "group1",
-        "state": "Unchanged",
+        "type": "Nested",
+        "newValue": null,
+        "oldValue": null,
         "children": [
             {
                 "name": "baz",
-                "oldValue": "bas",
+                "type": "Changed",
                 "newValue": "bars",
-                "state": "Changed"
+                "oldValue": "bas",
+                "children": null
             },
             {
                 "name": "foo",
-                "value": "bar",
-                "state": "Unchanged"
+                "type": "Unchanged",
+                "newValue": "bar",
+                "oldValue": null,
+                "children": null
             }
         ]
     },
-    {
+    "2": {
         "name": "group2",
-        "value": {
+        "type": "Removed",
+        "newValue": {
             "abc": "12345"
         },
-        "state": "Removed"
+        "oldValue": null,
+        "children": null
     },
-    {
+    "5": {
         "name": "group3",
-        "value": {
+        "type": "Added",
+        "newValue": null,
+        "oldValue": {
             "fee": "100500"
         },
-        "state": "Added"
+        "children": null
     }
-]
+}
