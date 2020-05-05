@@ -5,8 +5,8 @@ namespace Differ\Formatters\Pretty;
 function render($tree)
 {
     $acc = "{\n";
-    $string = function ($node, &$acc, $indentetion = " ") use (&$string) {
-        $getLine = array_reduce($node, function ($acc, $el) use (&$string, $indentetion) {
+    $getString = function ($node, &$acc, $indentetion = " ") use (&$getString) {
+        $getLine = array_reduce($node, function ($acc, $el) use (&$getString, $indentetion) {
             $acc .= $indentetion;
 
             if (array_key_exists('value', $el) && is_array($el['value'])) {
@@ -45,14 +45,14 @@ function render($tree)
             if ($el['state'] == 'NotChanged' && array_key_exists('children', $el)) {
                 $acc .= "  $indentetion{$el['name']}: {\n";
                 $newIndentetion = $indentetion . "  ";
-                return "{$string($el['children'], $acc, $newIndentetion)}{$indentetion}   }\n";
+                return "{$getString($el['children'], $acc, $newIndentetion)}{$indentetion}   }\n";
             }
             return $acc;
         }, $acc);
         return $getLine;
     };
 
-    return $string($tree, $acc) . "}\n";
+    return $getString($tree, $acc) . "}\n";
 }
 
 function upgradeArrayValue($value, $otstup = '  ')

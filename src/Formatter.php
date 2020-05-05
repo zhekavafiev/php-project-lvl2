@@ -1,16 +1,16 @@
 <?php
 
-namespace Differ\Formatter;
+namespace Differ\Formatters;
 
 function render($tree, $format)
 {
     switch ($format) {
         case 'plain':
-            return \Differ\Formatters\Plain\render($tree);
+            return Plain\render($tree);
         case 'json':
-            return \Differ\Formatters\Json\render($tree);
+            return Json\render($tree);
         case 'pretty':
-            return \Differ\Formatters\Pretty\render($tree);
+            return Pretty\render($tree);
         default:
             throw new \Exception("{$format} - not supporeted format");
     }

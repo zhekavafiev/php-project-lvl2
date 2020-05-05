@@ -3,8 +3,8 @@
 namespace Differ\Differ;
 
 use function Differ\Parser\parse;
-use function Differ\Hundler\buildingAst;
-use function Differ\Formatter\render;
+use function Differ\Hundler\buildAst;
+use function Differ\Formatters\render;
 
 function genDiff($path1, $path2, $format = 'pretty')
 {
@@ -18,7 +18,7 @@ function genDiff($path1, $path2, $format = 'pretty')
     $dataType2 = getTypeFile($path2);
     $parsedData2 = parse($rawData2, $dataType2);
 
-    $internalTree = buildingAst($parsedData1, $parsedData2);
+    $internalTree = buildAst($parsedData1, $parsedData2);
     return render($internalTree, $format);
 }
 
