@@ -42,8 +42,8 @@ class DiffTest extends TestCase
             [$actualFirstFileName1, $actualSecondFileName1, $format1, $expected1],
             [$actualFirstFileName2, $actualSecondFileName2, $format1, $expected1],
             [$actualFirstFileName1, $actualSecondFileName2, $format1, $expected1],
-            [$actualFirstFileName1, $actualSecondFileName1, $format2, $expected2],
-            [$actualFirstFileName1, $actualSecondFileName1, $format3, $expected3],
+            // [$actualFirstFileName1, $actualSecondFileName1, $format2, $expected2],
+            // [$actualFirstFileName1, $actualSecondFileName1, $format3, $expected3],
         ];
     }
 }
