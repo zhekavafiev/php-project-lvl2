@@ -11,51 +11,36 @@ function buildAst($data1, $data2)
     $allKeys = union($keys1, $keys2);
 
     $addDescriptionNode = array_map(function ($key) use ($data1, $data2) {
-        if (!property_exists($data1, $key)) {
+        $newValue = $data2->$key ?? null;
+        $oldValue = $data1->$key ?? null;
+        if (!$oldValue) {
             $type = 'Added';
-            if (!is_object($data2->$key)) {
-                $oldValue = $data2->$key;
-                return createDescription(null, $oldValue, $key, $type);
-            } elseif (is_object($data2->$key)) {
-                $oldValue = (array) $data2->$key;
-                return createDescription(null, $oldValue, $key, $type);
-            }
+            return createNode($key, $type, $newValue);
         }
 
-        if (!property_exists($data2, $key)) {
+        if (!$newValue) {
             $type = 'Removed';
-            if (!is_object($data1->$key)) {
-                $newValue = $data1->$key;
-                return createDescription($newValue, null, $key, $type);
-            } elseif (is_object($data1->$key)) {
-                $newValue = (array) $data1->$key;
-                return createDescription($newValue, null, $key, $type);
-            }
+            return createNode($key, $type, null, $oldValue);
         }
 
-        if (is_object($data1->$key) && is_object($data2->$key)) {
+        if (is_object($oldValue) && is_object($newValue)) {
             $type = 'Nested';
-            $children = buildAst($data1->$key, $data2->$key);
-            return createDescription(null, null, $key, $type, $children);
+            $children = buildAst($oldValue, $newValue);
+            return createNode($key, $type, null, null, $children);
         }
 
-        if (!is_object($data1->$key) && !is_object($data2->$key)) {
-            if ($data1->$key == $data2->$key) {
-                $type = 'Unchanged';
-                $newValue = $data1->$key;
-                return createDescription($newValue, null, $key, $type);
-            } else {
-                $type = 'Changed';
-                $newValue = $data2->$key;
-                $oldValue = $data1->$key;
-                return createDescription($newValue, $oldValue, $key, $type);
-            }
+        if ($oldValue == $newValue) {
+            $type = 'Unchanged';
+            return createNode($key, $type, null, $oldValue);
+        } else {
+            $type = 'Changed';
+            return createNode($key, $type, $newValue, $oldValue);
         }
     }, $allKeys);
     return $addDescriptionNode;
 }
 
-function createDescription($newValue, $oldValue, $key, $type, $children = null)
+function createNode($key, $type, $newValue, $oldValue = null, $children = null)
 {
     return [
         'name' => $key,

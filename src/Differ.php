@@ -19,7 +19,8 @@ function genDiff($path1, $path2, $format = 'pretty')
     $parsedData2 = parse($rawData2, $dataType2);
 
     $internalTree = buildAst($parsedData1, $parsedData2);
-    return render($internalTree, $format);
+    print_r($internalTree);
+    // return render($internalTree, $format);
 }
 
 function normalizePath($path)
