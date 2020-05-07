@@ -24,10 +24,7 @@
             "src/Parser.php",
             "src/Formatters.php",
             "src/Handler.php"
-        ],
-        "psr-4": {
-            "\\Differ\\Tests\\": "tests"
-        }
+        ]
     },
     "require": {
         "docopt/docopt": "^1.0",
