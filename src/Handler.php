@@ -10,7 +10,7 @@ function buildAst($data1, $data2)
     $keys2 = array_keys(get_object_vars($data2));
     $allKeys = union($keys1, $keys2);
 
-    $addDescriptionNode = array_map(function ($key) use ($data1, $data2) {
+    $addDescriptionTree = array_map(function ($key) use ($data1, $data2) {
         $newValue = $data2->$key ?? null;
         $oldValue = $data1->$key ?? null;
         if (!$oldValue) {
@@ -37,7 +37,7 @@ function buildAst($data1, $data2)
             return createNode($key, $type, $newValue, $oldValue);
         }
     }, $allKeys);
-    return $addDescriptionNode;
+    return $addDescriptionTree;
 }
 
 function createNode($key, $type, $newValue, $oldValue = null, $children = null)

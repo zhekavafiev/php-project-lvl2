@@ -2,7 +2,42 @@
 
 namespace Differ\Formatters\Pretty;
 
-function render($tree)
+function iter($tree, $depth = 1)
+{
+    $asd = array_map(function ($el) use ($depth) {
+        if ($el['type'] == 'Nested') {
+            $children = iter($el['children'], $depth + 1);
+            $result = implode("", $children);
+            return "{$depth} {$el['name']}: {\n{$result}{$depth}  }";
+        }
+
+        $newValue = json_encode($el['newValue']) ?? null;
+        $oldValue = json_encode($el['oldValue']) ?? null;
+
+        if ($el['type'] == 'Added') {
+            $string = "{$depth}+ {$el['name']}:{$newValue}\n";
+            return stringify($string, $depth);
+        }
+
+        if ($el['type'] == 'Removed') {
+            $string = "{$depth}- {$el['name']}:{$oldValue}\n";
+            return stringify($string, $depth);
+        }
+
+        if ($el['type'] == 'Unchanged') {
+            $string = "{$depth}  {$el['name']}:{$oldValue}\n";
+            return stringify($string, $depth);
+        }
+
+        if ($el['type'] == 'Changed') {
+            $string = "{$depth}- {$el['name']}: {$oldValue}|+ {$el['name']}: {$newValue}\n";
+            return stringify($string, $depth);
+        }
+    }, $tree);
+    return $asd;
+}
+
+/*function render($tree)
 {
     $resultStrint = "{\n";
     $getString = function ($node, &$resultStrint, $indentetion = " ") use (&$getString) {
@@ -58,22 +93,14 @@ function render($tree)
 
     return $getString($tree, $resultStrint) . "}\n";
 }
-
-function upgradeArrayValue($value, $indentetion = '  ')
+*/
+function stringify($string, $depth)
 {
-    $resultString = '';
-    $strigValue = json_encode($value);
-    for ($i = 0; $i < strlen($strigValue); $i++) {
-        if (
-            $strigValue[$i] != "'" && $strigValue[$i] != "\""
-            && $strigValue[$i] != "{" && $strigValue[$i] != "}"
-        ) {
-            if ($strigValue[$i] == ":") {
-                $resultString .= ": ";
-                continue;
-            }
-            $resultString .= $strigValue[$i];
-        }
-    }
-    return "{\n{$indentetion}{$indentetion}      $resultString\n{$indentetion}{$indentetion}  }";
+    $bracketDelete = str_replace("\"", '', $string);
+    $updateDoubleDot = str_replace(":", ": ", $bracketDelete);
+    $newDepth = $depth + 1;
+    $updateOpenBrase = str_replace("{", "{\n{$newDepth}  ", $updateDoubleDot);
+    $updateCloseBrase = str_replace("}", "\n{$depth}  }", $updateOpenBrase);
+    $updateBlancLine = str_replace("|", "\n{$depth}  ", $updateCloseBrase);
+    return $updateBlancLine;
 }

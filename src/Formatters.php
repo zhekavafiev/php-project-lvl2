@@ -10,7 +10,7 @@ function render($tree, $format)
         case 'json':
             return Json\render($tree);
         case 'pretty':
-            return Pretty\render($tree);
+            return Pretty\iter($tree);
         default:
             throw new \Exception("{$format} - not supporeted format");
     }
