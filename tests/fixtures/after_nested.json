@@ -4,7 +4,10 @@
     "setting3": true,
     "setting4": "blah blah",
     "setting5": {
-      "key5": "value5"
+      "key5": {
+        "key6": "value5"
+      },
+      "key20": "key10"
     }
   },
 
