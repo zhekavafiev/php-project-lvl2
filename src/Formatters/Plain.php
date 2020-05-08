@@ -4,14 +4,15 @@ namespace Differ\Formatters\Plain;
 
 function render($tree)
 {
+    print_r($tree);
     $acc = "";
     $res = function ($node, &$acc, $road = "") use (&$res) {
         $abc = array_reduce($node, function ($acc, $el) use (&$res, $road) {
             if ($el['type'] == 'Added') {
                 $road .= "{$el['name']}";
-                if (!is_array($el['oldValue'])) {
+                if (!is_object($el['newValue'])) {
                     $acc .=
-                    "Property '{$road}' was added with value: '{$el['oldValue']}'\n";
+                    "Property '{$road}' was added with value: '{$el['newValue']}'\n";
                 } else {
                     $acc .=
                     "Property '{$road}' was added with value: 'complex value'\n";

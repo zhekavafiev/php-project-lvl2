@@ -20,7 +20,7 @@ function buildAst($data1, $data2)
 
         if (!$newValue) {
             $type = 'Removed';
-            return createNode($key, $type, null, $oldValue);
+            return createNode($key, $type, $newValue, $oldValue);
         }
 
         if (is_object($oldValue) && is_object($newValue)) {
