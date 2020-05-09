@@ -31,17 +31,17 @@ function iter($tree, $depth = 1)
             switch ($type) {
                 case 'Added':
                     $value = stringify($newValue, $depth);
-                    return "$identation+ {$el['name']}: " . $value;
+                    return "$identation+ {$name}: " . $value;
                 case 'Removed':
                     $value = stringify($oldValue, $depth);
-                    return "$identation- {$el['name']}: " . $value;
+                    return "$identation- {$name}: " . $value;
                 case 'Unchanged':
                     $value = stringify($oldValue, $depth);
-                    return "$identation  {$el['name']}: " . $value;
+                    return "$identation  {$name}: " . $value;
                 case 'Changed':
                     $old = stringify($oldValue, $depth);
                     $new = stringify($newValue, $depth);
-                    return "$identation+ {$el['name']}: {$new}\n$identation- {$el['name']}: {$old}";
+                    return "$identation+ {$name}: {$new}\n$identation- {$name}: {$old}";
             }
         }
     }, $tree);
