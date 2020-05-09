@@ -10,7 +10,7 @@ use function Differ\Differ\genDiff;
 class DiffTest extends TestCase
 {
     /**
-     * @dataProvider chechRender
+     * @dataProvider chechRenderPrettyFormat
      */
 
     public function testDiff($fileName1, $fileName2, $format, $expected)
@@ -18,19 +18,13 @@ class DiffTest extends TestCase
         $this->assertSame($expected, genDiff(getFilePath($fileName1), getFilePath($fileName2), $format));
     }
 
-    public function chechRender()
+    public function chechRenderPrettyFormat()
     {
         $format1 = 'pretty';
-        $format2 = 'plain';
-        $format3 = 'json';
 
         $expectedFileName1 = 'test_pretty';
-        $expectedFileName2 = 'test_plain';
-        $expectedFileName3 = 'test_json';
 
         $expected1 = file_get_contents(getFilePath($expectedFileName1));
-        $expected2 = file_get_contents(getFilePath($expectedFileName2));
-        $expected3 = file_get_contents(getFilePath($expectedFileName3));
 
         $actualFirstFileName1 = 'before_nested.json';
         $actualSecondFileName1 = 'after_nested.json';
@@ -42,10 +36,35 @@ class DiffTest extends TestCase
             [$actualFirstFileName1, $actualSecondFileName1, $format1, $expected1],
             [$actualFirstFileName2, $actualSecondFileName2, $format1, $expected1],
             [$actualFirstFileName1, $actualSecondFileName2, $format1, $expected1],
-            [$actualFirstFileName1, $actualSecondFileName1, $format2, $expected2],
-            [$actualFirstFileName1, $actualSecondFileName1, $format3, $expected3],
         ];
     }
+
+    public function testDiffPlain()
+    {
+        $actualFirstFileName = 'before_nested.json';
+        $actualSecondFileName = 'after_nested.json';
+        $format = 'plain';
+
+        $expectedFileName = 'test_plain';
+        $expected = file_get_contents(getFilePath($expectedFileName));
+        $actual = genDiff(getFilePath($actualFirstFileName), getFilePath($actualSecondFileName), $format);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testDiffJson()
+    {
+        $actualFirstFileName = 'before_nested.json';
+        $actualSecondFileName = 'after_nested.json';
+        $format = 'json';
+
+        $expectedFileName = 'test_json';
+        $expected = file_get_contents(getFilePath($expectedFileName));
+        $actual = genDiff(getFilePath($actualFirstFileName), getFilePath($actualSecondFileName), $format);
+
+        $this->assertEquals($expected, $actual);
+    }
+
 }
 
 function getFilePath($fileName)
