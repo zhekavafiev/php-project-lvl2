@@ -11,9 +11,9 @@ function render($tree)
 
 function iter($tree, $depth = 1)
 {
-    $asd = array_map(function ($el) use ($depth) {
-        $mul = $depth * 2;
-        $identation = str_repeat(' ', $mul);
+    $convertToString = array_map(function ($el) use ($depth) {
+        $multiplier = $depth * 2;
+        $identation = str_repeat(' ', $multiplier);
         $name = $el['name'];
 
         $children = $el['children'] ?? null;
@@ -45,7 +45,7 @@ function iter($tree, $depth = 1)
             }
         }
     }, $tree);
-    return $asd;
+    return $convertToString;
 }
 
 function stringify($value, $depth)
