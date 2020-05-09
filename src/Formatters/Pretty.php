@@ -17,7 +17,8 @@ function iter($tree, $depth = 1)
         $name = $el['name'];
 
         $children = $el['children'] ?? null;
-        if ($children) {
+        
+        if ($el['type'] == 'Nested') {
             $implode = implode("\n", iter($children, $depth + 2));
             return "  $identation$name: " . "{\n$implode\n$identation  }";
         }
