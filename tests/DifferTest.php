@@ -64,7 +64,6 @@ class DiffTest extends TestCase
 
         $this->assertEquals($expected, $actual);
     }
-
 }
 
 function getFilePath($fileName)
