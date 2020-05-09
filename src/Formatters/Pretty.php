@@ -15,10 +15,10 @@ function iter($tree, $depth = 1)
         $multiplier = $depth * 2;
         $identation = str_repeat(' ', $multiplier);
         $name = $el['name'];
-
+        $type = $el['type'];
         $children = $el['children'] ?? null;
         
-        if ($el['type'] == 'Nested') {
+        if ($type == 'Nested') {
             $implode = implode("\n", iter($children, $depth + 2));
             return "  $identation$name: " . "{\n$implode\n$identation  }";
         }
@@ -27,7 +27,6 @@ function iter($tree, $depth = 1)
         $oldValue = $el['oldValue'] ?? null;
 
         if (!$children) {
-            $type = $el['type'];
             switch ($type) {
                 case 'Added':
                     $value = stringify($newValue, $depth);
