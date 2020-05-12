@@ -4,53 +4,53 @@ namespace Differ\Formatters\Pretty;
 
 function render($tree)
 {
-    $firstdepth = iter($tree);
-    $implode = implode("\n", $firstdepth);
-    return "{\n$implode\n}\n";
+    $result = implode("\n", iter($tree));
+    return "{\n$result\n}\n";
 }
 
 function iter($tree, $depth = 1)
 {
-    $convertToString = array_map(function ($el) use ($depth) {
-        $multiplier = $depth * 2;
-        $identation = str_repeat(' ', $multiplier);
-        $name = $el['name'];
-        $type = $el['type'];
-        $children = $el['children'] ?? null;
+    $mapped = array_map(function ($node) use ($depth) {
+        $identationMultiplier = $depth * 2;
+        $identation = str_repeat(' ', $identationMultiplier);
+        $name = $node['name'];
+        $type = $node['type'];
         
         if ($type == 'Nested') {
-            $implode = implode("\n", iter($children, $depth + 2));
-            return "  $identation$name: " . "{\n$implode\n$identation  }";
+            $stepOnDepth = implode("\n", iter($node['children'], $depth + 2));
+            return "  $identation$name: " . "{\n$stepOnDepth\n$identation  }";
         }
         
-        $newValue = $el['newValue'] ?? null;
-        $oldValue = $el['oldValue'] ?? null;
+        $newValue = $node['newValue'] ?? null;
+        $oldValue = $node['oldValue'] ?? null;
 
-        if (!$children) {
-            switch ($type) {
-                case 'Added':
-                    $value = stringify($newValue, $depth);
-                    return "$identation+ {$name}: " . $value;
-                case 'Removed':
-                    $value = stringify($oldValue, $depth);
-                    return "$identation- {$name}: " . $value;
-                case 'Unchanged':
-                    $value = stringify($oldValue, $depth);
-                    return "$identation  {$name}: " . $value;
-                case 'Changed':
-                    $old = stringify($oldValue, $depth);
-                    $new = stringify($newValue, $depth);
-                    return "$identation+ {$name}: {$new}\n$identation- {$name}: {$old}";
-            }
+        switch ($type) {
+            case 'Added':
+                $value = stringify($newValue, $depth);
+                return "$identation+ {$name}: " . $value;
+            case 'Removed':
+                $value = stringify($oldValue, $depth);
+                return "$identation- {$name}: " . $value;
+            case 'Unchanged':
+                $value = stringify($oldValue, $depth);
+                return "$identation  {$name}: " . $value;
+            case 'Changed':
+                $old = stringify($oldValue, $depth);
+                $new = stringify($newValue, $depth);
+                $value = [
+                    "$identation+ {$name}: {$new}",
+                    "$identation- {$name}: {$old}"
+                ];
+                return implode("\n", $value);
         }
     }, $tree);
-    return $convertToString;
+    return $mapped;
 }
 
 function stringify($value, $depth)
 {
-    $multiplier = $depth * 2;
-    $identation = str_repeat(' ', $multiplier);
+    $identationMultiplier = $depth * 2;
+    $identation = str_repeat(' ', $identationMultiplier);
     $type = gettype($value);
         
     switch ($type) {
@@ -58,7 +58,7 @@ function stringify($value, $depth)
             $iter = implode(", ", $value);
             return "[$iter]";
         case 'boolean':
-            if ($value == 1) {
+            if ($value === true) {
                 return "true";
             } else {
                 return 'false';
@@ -67,13 +67,11 @@ function stringify($value, $depth)
             $depth += 2;
             $properties = array_keys(get_object_vars($value));
             $getValue = array_map(function ($key) use ($depth, $value) {
-                $newMultiplier = $depth * 2;
-                $newIdentation = str_repeat(' ', $newMultiplier);
+                $newIdentationMultiplier = $depth * 2;
+                $newIdentation = str_repeat(' ', $newIdentationMultiplier);
                 $iter = stringify($value->$key, $depth + 1);
                 return "{$newIdentation}  {$key}: {$iter}";
             }, $properties);
-            $newMultiplier = $depth * 2;
-            $newIdentation = str_repeat(' ', $newMultiplier);
             $implode = implode("\n", $getValue);
             return "{\n$implode\n$identation  }";
         default:
