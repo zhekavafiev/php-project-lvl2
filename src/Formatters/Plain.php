@@ -4,49 +4,60 @@ namespace Differ\Formatters\Plain;
 
 function render($tree)
 {
-    return iter($tree);
+    return implode('', iter($tree));
 }
 
-function iter($tree, $acc = '', $roadToProperties = '')
+function iter($tree, $parent = '')
 {
-    $putDescription = array_reduce($tree, function ($acc, $node) use ($roadToProperties) {
+    $mapping = array_map(function ($node) use ($parent) {
+        $parent .= $node['name'];
         $type = $node['type'];
-        $name = $node['name'];
-        
+
         switch ($type) {
             case 'Added':
-                $roadToProperties .= "{$name}";
-                if (!is_object($node['newValue'])) {
-                    $acc .=
-                    "Property '{$roadToProperties}' was added with value: '{$node['newValue']}'\n";
-                } else {
-                    $acc .=
-                    "Property '{$roadToProperties}' was added with value: 'complex value'\n";
-                }
-                break;
+                $value = stringify($node['newValue']);
+                return "Property '{$parent}' was added with value: '{$value}'\n";
             
             case 'Unchanged':
                 break;
             
             case 'Removed':
-                $roadToProperties .= "{$name}";
-                $acc .= "Property '{$roadToProperties}' was removed\n";
-                break;
+                return "Property '{$parent}' was removed\n";
             
             case 'Changed':
-                $roadToProperties .= "{$name}";
-                $acc .=
-                "Property '{$roadToProperties}' was changed. From '{$node['oldValue']}' to '{$node['newValue']}'\n";
+                $newVal = stringify($node['newValue']);
+                $oldval = stringify($node['oldValue']);
+                return
+                "Property '{$parent}' was changed. From '{$oldval}' to '{$newVal}'\n";
                 break;
             
             case 'Nested':
-                $roadToProperties .= "{$name}.";
-                return iter($node['children'], $acc, $roadToProperties);
+                $parent .= '.';
+                $stepOnDepth = iter($node['children'], $parent);
+                return implode('', $stepOnDepth);
             default:
                 break;
         }
-        return $acc;
-    }, $acc);
+    }, $tree);
     
-    return $putDescription;
+    return $mapping;
+}
+
+function stringify($value)
+{
+    $type = gettype($value);
+        
+    switch ($type) {
+        case 'array':
+        case 'object':
+            return "complex value";
+        case 'boolean':
+            if ($value === true) {
+                return "true";
+            } else {
+                return 'false';
+            }
+        default:
+            return $value;
+    }
 }
