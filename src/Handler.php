@@ -14,27 +14,22 @@ function buildAst($data1, $data2)
         $newValue = $data2->$key ?? null;
         $oldValue = $data1->$key ?? null;
         if (!$oldValue) {
-            $type = 'Added';
-            return createNode($key, $type, $newValue);
+            return createNode($key, 'Added', $newValue);
         }
 
         if (!$newValue) {
-            $type = 'Removed';
-            return createNode($key, $type, $newValue, $oldValue);
+            return createNode($key, 'Removed', $newValue, $oldValue);
         }
 
         if (is_object($oldValue) && is_object($newValue)) {
-            $type = 'Nested';
             $children = buildAst($oldValue, $newValue);
-            return createNode($key, $type, null, null, $children);
+            return createNode($key, 'Nested', null, null, $children);
         }
 
         if ($oldValue == $newValue) {
-            $type = 'Unchanged';
-            return createNode($key, $type, null, $oldValue);
+            return createNode($key, 'Unchanged', null, $oldValue);
         } else {
-            $type = 'Changed';
-            return createNode($key, $type, $newValue, $oldValue);
+            return createNode($key, 'Changed', $newValue, $oldValue);
         }
     }, $allKeys);
     return $addDescriptionTree;
