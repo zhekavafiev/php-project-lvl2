@@ -68,8 +68,8 @@ function stringify($value, $depth)
                 $formattedValue = stringify($value->$key, $depth + 1);
                 return "{$newIdentation}  {$key}: {$formattedValue}";
             }, $properties);
-            $implode = implode("\n", $data);
-            return "{\n$implode\n$identation  }";
+            $result = implode("\n", $data);
+            return "{\n$result\n$identation  }";
         default:
             return $value;
     }
