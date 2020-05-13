@@ -5,7 +5,7 @@ namespace Differ\Formatters\Pretty;
 function render($tree)
 {
     $result = implode("\n", iter($tree));
-    return "{\n$result\n}\n";
+    return "{\n$result\n}";
 }
 
 function iter($tree, $depth = 1)
