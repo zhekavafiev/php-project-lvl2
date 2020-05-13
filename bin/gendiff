@@ -10,17 +10,14 @@ $doc = <<<'DOCOPT'
 Usage:
     gendiff (-h| --help)
     gendiff (-v| --version)
-    gendiff [--format <fmt>] [<firstFile>] [<secondFile>]
+    gendiff [--format <fmt>] <firstFile> <secondFile>
+
 Options:
-    -h             show this screen
-    -v --version   show version
-    --format <fmt> Report format [default: pretty]
+    -h              show this screen
+    -v --version    show version
+    --format <fmt>  Report format [default: pretty]
 DOCOPT;
 
 $dataForDiff = Docopt::handle($doc, array('version' => '1.0.0rc2'));
-
-if ($dataForDiff['--format'] == '') {
-    $dataForDiff['--format'] = 'pretty';
-}
 $diff = genDiff($dataForDiff['<firstFile>'], $dataForDiff['<secondFile>'], $dataForDiff['--format']);
 print_r($diff);
