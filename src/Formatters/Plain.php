@@ -7,33 +7,33 @@ function render($tree)
     return implode('', iter($tree));
 }
 
-function iter($tree, $parent = '')
+function iter($tree, $ancestry = '')
 {
-    $mapping = array_map(function ($node) use ($parent) {
-        $parent .= $node['name'];
+    $mapping = array_map(function ($node) use ($ancestry) {
+        $newAncestry = $ancestry . $node['name'];
         $type = $node['type'];
 
         switch ($type) {
             case 'Added':
                 $value = stringify($node['newValue']);
-                return "Property '{$parent}' was added with value: '{$value}'\n";
+                return "Property '{$newAncestry}' was added with value: '{$value}'\n";
             
             case 'Unchanged':
                 break;
             
             case 'Removed':
-                return "Property '{$parent}' was removed\n";
+                return "Property '{$newAncestry}' was removed\n";
             
             case 'Changed':
                 $newVal = stringify($node['newValue']);
                 $oldval = stringify($node['oldValue']);
                 return
-                "Property '{$parent}' was changed. From '{$oldval}' to '{$newVal}'\n";
+                "Property '{$newAncestry}' was changed. From '{$oldval}' to '{$newVal}'\n";
                 break;
             
             case 'Nested':
-                $parent .= '.';
-                $stepOnDepth = iter($node['children'], $parent);
+                $newAncestry .= '.';
+                $stepOnDepth = iter($node['children'], $newAncestry);
                 return implode('', $stepOnDepth);
             default:
                 break;
