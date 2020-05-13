@@ -52,7 +52,7 @@ function stringify($value)
         case 'object':
             return "complex value";
         case 'boolean':
-            return ($value === true) ? 'true' : 'false';
+            return $value ? 'true' : 'false';
         default:
             return $value;
     }

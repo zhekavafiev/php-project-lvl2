@@ -58,7 +58,7 @@ function stringify($value, $depth)
             $iter = implode(", ", $value);
             return "[$iter]";
         case 'boolean':
-            return ($value === true) ? 'true' : 'false';
+            return $value ? 'true' : 'false';
         case 'object':
             $depth += 2;
             $properties = array_keys(get_object_vars($value));
