@@ -55,20 +55,20 @@ function stringify($value, $depth)
         
     switch ($type) {
         case 'array':
-            $iter = implode(", ", $value);
-            return "[$iter]";
+            $formattedValue = implode(", ", $value);
+            return "[$formattedValue]";
         case 'boolean':
             return $value ? 'true' : 'false';
         case 'object':
             $depth += 2;
             $properties = array_keys(get_object_vars($value));
-            $getValue = array_map(function ($key) use ($depth, $value) {
+            $data = array_map(function ($key) use ($depth, $value) {
                 $newIdentationMultiplier = $depth * 2;
                 $newIdentation = str_repeat(' ', $newIdentationMultiplier);
-                $iter = stringify($value->$key, $depth + 1);
-                return "{$newIdentation}  {$key}: {$iter}";
+                $formattedValue = stringify($value->$key, $depth + 1);
+                return "{$newIdentation}  {$key}: {$formattedValue}";
             }, $properties);
-            $implode = implode("\n", $getValue);
+            $implode = implode("\n", $data);
             return "{\n$implode\n$identation  }";
         default:
             return $value;
