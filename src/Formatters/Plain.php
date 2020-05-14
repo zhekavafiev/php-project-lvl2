@@ -36,7 +36,7 @@ function iter($tree, $ancestry = '')
                 
             case 'Nested':
                 $newAncestry .= '.';
-                $result = (iter($node['children'], $newAncestry));
+                $result = iter($node['children'], $newAncestry);
                 return implode("\n", $result);
             default:
                 break;
