@@ -11,14 +11,17 @@ function render($tree)
 function iter($tree, $depth = 1)
 {
     $mapped = array_map(function ($node) use ($depth) {
-        $identationMultiplier = $depth * 2;
+        $identationMultiplier = $depth * 4;
+        $smollIdentatioMultiplier = $identationMultiplier - 2;
         $identation = str_repeat(' ', $identationMultiplier);
+        $smallIdentation = str_repeat(' ', $smollIdentatioMultiplier);
+        
         $name = $node['name'];
         $type = $node['type'];
         
         if ($type == 'Nested') {
-            $stepOnDepth = implode("\n", iter($node['children'], $depth + 2));
-            return "  $identation$name: " . "{\n$stepOnDepth\n$identation  }";
+            $stepOnDepth = implode("\n", iter($node['children'], $depth + 1));
+            return "{$identation}{$name}: " . "{\n{$stepOnDepth}\n{$identation}}";
         }
         
         $newValue = $node['newValue'] ?? null;
@@ -28,14 +31,14 @@ function iter($tree, $depth = 1)
             case 'Added':
                 $value = stringify($newValue, $depth);
                 $formatRezult = "%s+ %s: %s";
-                return sprintf($formatRezult, $identation, $name, $value);
+                return sprintf($formatRezult, $smallIdentation, $name, $value);
             case 'Removed':
                 $value = stringify($oldValue, $depth);
                 $formatRezult = "%s- %s: %s";
-                return sprintf($formatRezult, $identation, $name, $value);
+                return sprintf($formatRezult, $smallIdentation, $name, $value);
             case 'Unchanged':
                 $value = stringify($oldValue, $depth);
-                $formatRezult = "%s  %s: %s";
+                $formatRezult = "%s%s: %s";
                 return sprintf($formatRezult, $identation, $name, $value);
             case 'Changed':
                 $old = stringify($oldValue, $depth);
@@ -44,8 +47,8 @@ function iter($tree, $depth = 1)
                 $formatOld = "%s- %s: %s";
                 
                 $value = [
-                    sprintf($forrmatNew, $identation, $name, $new),
-                    sprintf($formatOld, $identation, $name, $old)
+                    sprintf($forrmatNew, $smallIdentation, $name, $new),
+                    sprintf($formatOld, $smallIdentation, $name, $old)
                 ];
                 return implode("\n", $value);
         }
@@ -55,8 +58,9 @@ function iter($tree, $depth = 1)
 
 function stringify($value, $depth)
 {
-    $identationMultiplier = $depth * 2;
+    $identationMultiplier = $depth * 4;
     $identation = str_repeat(' ', $identationMultiplier);
+
     $type = gettype($value);
         
     switch ($type) {
@@ -66,16 +70,18 @@ function stringify($value, $depth)
         case 'boolean':
             return $value ? 'true' : 'false';
         case 'object':
-            $depth += 2;
+            $newDepth = $depth + 1;
             $properties = array_keys(get_object_vars($value));
-            $data = array_map(function ($key) use ($depth, $value) {
-                $newIdentationMultiplier = $depth * 2;
+
+            $data = array_map(function ($key) use ($newDepth, $value) {
+                $newIdentationMultiplier = $newDepth * 4;
                 $newIdentation = str_repeat(' ', $newIdentationMultiplier);
-                $formattedValue = stringify($value->$key, $depth + 1);
-                return "{$newIdentation}  {$key}: {$formattedValue}";
+                $formattedValue = stringify($value->$key, $newDepth + 1);
+                return "{$newIdentation}{$key}: {$formattedValue}";
             }, $properties);
+            
             $result = implode("\n", $data);
-            return "{\n$result\n$identation  }";
+            return "{\n$result\n$identation}";
         default:
             return $value;
     }
