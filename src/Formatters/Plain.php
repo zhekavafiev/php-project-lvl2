@@ -39,7 +39,7 @@ function iter($tree, $ancestry = '')
                 $result = iter($node['children'], $newAncestry);
                 return implode("\n", $result);
             default:
-                break;
+                throw new \Exception("Unknown type {$type}");
         }
     }, $filtered);
     
