@@ -27,19 +27,25 @@ function iter($tree, $depth = 1)
         switch ($type) {
             case 'Added':
                 $value = stringify($newValue, $depth);
-                return "$identation+ {$name}: " . $value;
+                $formatRezult = "%s+ %s: %s";
+                return sprintf($formatRezult, $identation, $name, $value);
             case 'Removed':
                 $value = stringify($oldValue, $depth);
-                return "$identation- {$name}: " . $value;
+                $formatRezult = "%s- %s: %s";
+                return sprintf($formatRezult, $identation, $name, $value);
             case 'Unchanged':
                 $value = stringify($oldValue, $depth);
-                return "$identation  {$name}: " . $value;
+                $formatRezult = "%s  %s: %s";
+                return sprintf($formatRezult, $identation, $name, $value);
             case 'Changed':
                 $old = stringify($oldValue, $depth);
                 $new = stringify($newValue, $depth);
+                $forrmatNew = "%s+ %s: %s";
+                $formatOld = "%s- %s: %s";
+                
                 $value = [
-                    "$identation+ {$name}: {$new}",
-                    "$identation- {$name}: {$old}"
+                    sprintf($forrmatNew, $identation, $name, $new),
+                    sprintf($formatOld, $identation, $name, $old)
                 ];
                 return implode("\n", $value);
         }
