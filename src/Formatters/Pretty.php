@@ -12,9 +12,9 @@ function iter($tree, $depth = 1)
 {
     $mapped = array_map(function ($node) use ($depth) {
         $identationMultiplier = $depth * 4;
-        $smollIdentatioMultiplier = $identationMultiplier - 2;
+        $smallIdententionMultiplier = $identationMultiplier - 2;
         $identation = str_repeat(' ', $identationMultiplier);
-        $small = str_repeat(' ', $smollIdentatioMultiplier);
+        $smallIdentation = str_repeat(' ', $smallIdententionMultiplier);
         
         $name = $node['name'];
         $type = $node['type'];
@@ -31,11 +31,11 @@ function iter($tree, $depth = 1)
             case 'Added':
                 $value = stringify($newValue, $depth);
                 $format = "%s+ %s: %s";
-                return sprintf($format, $small, $name, $value);
+                return sprintf($format, $smallIdentation, $name, $value);
             case 'Removed':
                 $value = stringify($oldValue, $depth);
                 $format = "%s- %s: %s";
-                return sprintf($format, $small, $name, $value);
+                return sprintf($format, $smallIdentation, $name, $value);
             case 'Unchanged':
                 $value = stringify($oldValue, $depth);
                 $format = "%s%s: %s";
@@ -47,8 +47,8 @@ function iter($tree, $depth = 1)
                 $formatOld = "%s- %s: %s";
                 
                 $value = [
-                    sprintf($forrmatNew, $small, $name, $new),
-                    sprintf($formatOld, $small, $name, $old)
+                    sprintf($forrmatNew, $smallIdentation, $name, $new),
+                    sprintf($formatOld, $smallIdentation, $name, $old)
                 ];
                 return implode("\n", $value);
         }
