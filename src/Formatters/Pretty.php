@@ -14,7 +14,7 @@ function iter($tree, $depth = 1)
         $identationMultiplier = $depth * 4;
         $smollIdentatioMultiplier = $identationMultiplier - 2;
         $identation = str_repeat(' ', $identationMultiplier);
-        $smallIdentation = str_repeat(' ', $smollIdentatioMultiplier);
+        $small = str_repeat(' ', $smollIdentatioMultiplier);
         
         $name = $node['name'];
         $type = $node['type'];
@@ -30,16 +30,16 @@ function iter($tree, $depth = 1)
         switch ($type) {
             case 'Added':
                 $value = stringify($newValue, $depth);
-                $formatRezult = "%s+ %s: %s";
-                return sprintf($formatRezult, $smallIdentation, $name, $value);
+                $format = "%s+ %s: %s";
+                return sprintf($format, $small, $name, $value);
             case 'Removed':
                 $value = stringify($oldValue, $depth);
-                $formatRezult = "%s- %s: %s";
-                return sprintf($formatRezult, $smallIdentation, $name, $value);
+                $format = "%s- %s: %s";
+                return sprintf($format, $small, $name, $value);
             case 'Unchanged':
                 $value = stringify($oldValue, $depth);
-                $formatRezult = "%s%s: %s";
-                return sprintf($formatRezult, $identation, $name, $value);
+                $format = "%s%s: %s";
+                return sprintf($format, $identation, $name, $value);
             case 'Changed':
                 $old = stringify($oldValue, $depth);
                 $new = stringify($newValue, $depth);
@@ -47,8 +47,8 @@ function iter($tree, $depth = 1)
                 $formatOld = "%s- %s: %s";
                 
                 $value = [
-                    sprintf($forrmatNew, $smallIdentation, $name, $new),
-                    sprintf($formatOld, $smallIdentation, $name, $old)
+                    sprintf($forrmatNew, $small, $name, $new),
+                    sprintf($formatOld, $small, $name, $old)
                 ];
                 return implode("\n", $value);
         }
