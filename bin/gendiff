@@ -18,6 +18,6 @@ Options:
     --format <fmt>  Report format [default: pretty]
 DOCOPT;
 
-$dataForDiff = Docopt::handle($doc, array('version' => '1.0.0rc2'));
+$dataForDiff = Docopt::handle($doc, array('version' => '0.1.0'));
 $diff = genDiff($dataForDiff['<firstFile>'], $dataForDiff['<secondFile>'], $dataForDiff['--format']);
 print_r($diff);

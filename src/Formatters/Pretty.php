@@ -60,7 +60,6 @@ function stringify($value, $depth)
 {
     $identationMultiplier = $depth * 4;
     $identation = str_repeat(' ', $identationMultiplier);
-
     $type = gettype($value);
         
     switch ($type) {
