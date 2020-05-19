@@ -33,6 +33,5 @@ class DiffTest extends TestCase
 
 function getFilePath($fileName)
 {
-    $absolutePath = [__DIR__, "fixtures", $fileName];
-    return implode(DIRECTORY_SEPARATOR, $absolutePath);
+    return __DIR__ . "/fixtures" . "/{$fileName}";
 }
