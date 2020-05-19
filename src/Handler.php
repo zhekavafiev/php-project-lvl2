@@ -11,15 +11,16 @@ function buildAst($data1, $data2)
     $allKeys = union($keys1, $keys2);
 
     $addDescriptionTree = array_map(function ($key) use ($data1, $data2) {
-        $newValue = $data2->$key ?? null;
-        $oldValue = $data1->$key ?? null;
-        if (!$oldValue) {
-            return createNode($key, 'Added', $newValue);
+        if (!property_exists($data1, $key)) {
+            return createNode($key, 'Added', $data2->$key);
         }
 
-        if (!$newValue) {
-            return createNode($key, 'Removed', $newValue, $oldValue);
+        if (!property_exists($data2, $key)) {
+            return createNode($key, 'Removed', null, $data1->$key);
         }
+
+        $newValue = $data2->$key;
+        $oldValue = $data1->$key;
 
         if (is_object($oldValue) && is_object($newValue)) {
             $children = buildAst($oldValue, $newValue);
