@@ -33,5 +33,5 @@ class DiffTest extends TestCase
 
 function getFilePath($fileName)
 {
-    return __DIR__ . "/fixtures" . "/{$fileName}";
+    return __DIR__ . "/fixtures/{$fileName}";
 }
