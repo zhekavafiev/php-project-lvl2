@@ -23,7 +23,7 @@
             "src/Differ.php",
             "src/Parser.php",
             "src/Formatters.php",
-            "src/Handler.php"
+            "src/AstBuilder.php"
         ]
     },
     "require": {

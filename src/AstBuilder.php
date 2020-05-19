@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\Hundler;
+namespace Differ\AstBuilder;
 
 use function Funct\Collection\union;
 

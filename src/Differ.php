@@ -3,7 +3,7 @@
 namespace Differ\Differ;
 
 use function Differ\Parser\parse;
-use function Differ\Hundler\buildAst;
+use function Differ\AstBuilder\buildAst;
 use function Differ\Formatters\render;
 
 function genDiff($path1, $path2, $format = 'pretty')
