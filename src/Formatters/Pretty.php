@@ -18,16 +18,13 @@ function iter($tree, $depth = 1)
         
         $name = $node['name'];
         $type = $node['type'];
-        
-        if ($type == 'Nested') {
-            $stepOnDepth = implode("\n", iter($node['children'], $depth + 1));
-            return "{$identation}{$name}: " . "{\n{$stepOnDepth}\n{$identation}}";
-        }
-        
-        $newValue = $node['newValue'] ?? null;
-        $oldValue = $node['oldValue'] ?? null;
+        $newValue = $node['newValue'];
+        $oldValue = $node['oldValue'];
 
         switch ($type) {
+            case 'Nested':
+                $stepOnDepth = implode("\n", iter($node['children'], $depth + 1));
+                return "{$identation}{$name}: " . "{\n{$stepOnDepth}\n{$identation}}";
             case 'Added':
                 $value = stringify($newValue, $depth);
                 $format = "%s+ %s: %s";
