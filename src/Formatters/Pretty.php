@@ -23,8 +23,8 @@ function iter($tree, $depth = 1)
 
         switch ($type) {
             case 'Nested':
-                $stepOnDepth = implode("\n", iter($node['children'], $depth + 1));
-                return "{$identation}{$name}: " . "{\n{$stepOnDepth}\n{$identation}}";
+                $result = implode("\n", iter($node['children'], $depth + 1));
+                return "{$identation}{$name}: " . "{\n{$result}\n{$identation}}";
             case 'Added':
                 $value = stringify($newValue, $depth);
                 $format = "%s+ %s: %s";
