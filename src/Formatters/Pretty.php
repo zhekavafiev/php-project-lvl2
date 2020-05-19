@@ -43,11 +43,10 @@ function iter($tree, $depth = 1)
                 $forrmatNew = "%s+ %s: %s";
                 $formatOld = "%s- %s: %s";
                 
-                $value = [
+                return implode("\n", [
                     sprintf($forrmatNew, $smallIdentation, $name, $new),
                     sprintf($formatOld, $smallIdentation, $name, $old)
-                ];
-                return implode("\n", $value);
+                ]);
         }
     }, $tree);
     return $mapped;
